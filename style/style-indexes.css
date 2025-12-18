@@ -1,0 +1,57 @@
+.logo-strony {
+    width: 100%;
+    max-width: 5vw;
+    margin-left: 5vw;
+    margin-right: 35vw;
+}
+
+.pasek-glowny {
+    background-color: #465775;
+    display: flex;
+    align-items: center;
+    height: 11vh;
+    width: 100vw;
+    position: absolute;
+}
+
+.wyszukiwarka {
+    width: 40vw;
+}
+
+.szukaj {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+    height: 30%;
+    margin-right: 20vw;
+}
+
+.konto,
+.koszyk,
+.admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vw;
+}
+
+.koszyk {
+    margin-left: 2vw;
+    margin-right:5vw;
+}
+
+.konto img,
+.koszyk img,
+.admin img {
+    width: 100%;
+}
+
+.admin {
+    margin-right:1vw;
+}
+
+.szukaj img {
+    width: 150%;
+    height: 160%;
+}

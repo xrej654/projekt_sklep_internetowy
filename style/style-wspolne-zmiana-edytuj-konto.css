@@ -1,0 +1,44 @@
+.edytuj-konto, .zmiana {
+    background-color: #465775;
+    display: flex;
+    gap: 2vh;
+    width: 100%;
+    max-width: 1100px;
+    height: 200px;
+    position: relative;
+    left: 20vw;
+    top: 2vw;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.edytuj-konto .kolumna-lewa img, .zmiana .kolumna-lewa img {
+    width: 75%;
+    height: 75%;
+    position: relative;
+    left: 12.5%;
+    top: 12.5%;
+}
+
+.edytuj-konto .nazwa-uzytkownika, .zmiana .nazwa-uzytkownika {
+    text-align: center;
+    width: 12.5vw;
+    margin-top:2vh;
+}
+
+.edytuj-konto .img-background, .zmiana .img-background {
+    background-color: #6e88b4;
+    width: 5vw;
+    max-width: 30vw;
+    position: relative;
+    left: 3.65vw;
+    top: 1.5vh;
+    border-radius: 100%;
+    border: 1px solid #465775;
+}
+
+.edytuj-konto .kolumna-prawa a {
+    text-align: center;
+    position: relative;
+    top: 1vw;
+}   

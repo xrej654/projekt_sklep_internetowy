@@ -1,0 +1,26 @@
+.nowe-konto {
+    background-color: #465775;
+    position: relative;
+    bottom: 2vh;
+    width: 100vw;
+    max-width: 65vw;
+    height: 20vh;
+    border: 2px solid #465775;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 2vw auto;
+    padding: 0.5vw;
+}
+
+.nowe-konto button {
+    width: 100%;
+    max-width: 10vw;
+}
+
+.nowe-konto form {
+    display: flex;
+    gap: 5vw;
+    width: 100vw;
+}

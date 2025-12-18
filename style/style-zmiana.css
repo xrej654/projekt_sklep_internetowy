@@ -1,0 +1,14 @@
+.zmiana .kolumna-prawa {
+    position: relative;
+    top: 1vh;
+    line-height: 2vh;
+}
+
+.zmiana button {
+    width: 5vw;
+    margin-top: 3%;
+}
+
+.zmiana input {
+    width: 50%;
+}

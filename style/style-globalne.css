@@ -1,0 +1,99 @@
+body {
+    margin: 0px;
+    background-color: #90A8C3;
+}
+
+button {
+    background-color: #65a070;
+    border-color: #99F7AB;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    color: white;
+}
+
+table {
+    border: 1px solid black;
+    padding: 1vw;
+    width:90%;
+    text-align: center;
+    border-collapse: collapse;
+    border-radius: 15px;
+    margin-left:5%;
+    margin-top:2.5vh;
+}
+
+table button {
+    width: 50%;
+}
+
+td, th {
+    border: 1px solid black;
+}
+
+input , textarea, select {
+    background-color: #5f77a0;
+}
+
+* {
+    color: #F9DC5C;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff2ba;
+}
+
+.table-section {
+    border: 1px solid black;
+    width: 90vw;
+    height: auto;
+    padding-top: 2.5vh;
+    padding-bottom: 2.5vh;
+    margin-left: 5vw;
+    margin-top: 5vh;
+    border-radius: 15px;
+    background-color: #465775;
+}
+
+.table-section a {
+    margin-left:45vw;
+}
+
+.table-section table a {
+    margin-left:0px;    
+}
+
+.error-block {
+    position: fixed;
+    left: 87vw;
+    bottom: 5vh;
+    background-color: red;
+    width: 10vw;
+    height: 7.5vh;
+    border: 1px solid black;
+}
+
+.error-block p {
+    margin-left: 0.5vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    color: white;
+}
+
+.error-block button {
+    float: right;
+    position: relative;
+    left: 2.5vw;
+    width: 30%;
+    bottom: 1.75vw;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.error-block img {
+    width: 1.5vw;
+}

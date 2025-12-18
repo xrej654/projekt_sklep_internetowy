@@ -1,0 +1,28 @@
+.tabelka-panelu {
+    background-color: #465775;
+    width:90vw;
+    height: auto;
+    position: relative;
+    top:3vh;
+    left:5vw;
+    border-radius: 15px;
+    border:1px solid #465775;
+    padding-bottom: 1vh;
+}
+
+.tabelka-panelu a {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    height: auto;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    color: #F9DC5C;
+}
+
+input, textarea, select {
+    width: 7.5vw;
+}
