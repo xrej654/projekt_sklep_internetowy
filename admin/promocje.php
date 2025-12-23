@@ -25,32 +25,40 @@
 
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
+
             if (isset($_POST['id']) && $row['promocja_id'] == $_POST['id'])
                 echo "<tr> <td><input name=\"nowa_nazwa_promocjii\" value=\"{$row['promocja']}\"}></td> <td colspan=\"2\"><button type=\"submit\" name=\"zmiana\">Zmien</button></td> </tr>";
-            else
+            else {
                 echo "<tr> <td>{$row['promocja']}</td>";
-            if (isset($_POST['czy_dodac']))
-                echo "<td>Dostepne jak zakonczysz formualrz dodawania</td> <td>PDostepne jak zakonczysz formualrz dodawania</td> </tr>";
-            else
-                echo "<td><button type=\"submit\" name=\"zmien\">Zmien</button></td> <td><button type=\"submit\" name=\"usun\">Usun</button></td> </tr>";
 
-            if (isset($_GET['czy_dodac'])) {
-                echo "<form  method=\"post\">";
-                echo "<tr>";
-                echo "<td> <input name=\"nazwa_promocji\"> </td>";
-                echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
-                echo "</tr>";
-                echo "</form>";
+                if (isset($_POST['czy_dodac']) || isset($_POST['id']))
+                    echo "<td colspan=\"2\">Dostepne jak zakonczysz formualrz dodawania</tr>";
+                else
+                    echo "<td><button type=\"submit\" name=\"zmien\">Zmien</button></td> <td><button type=\"submit\" name=\"usun\">Usun</button></td> </tr>";
             }
 
             echo "<input type=\"hidden\" name=\"id\" value=\"{$row['promocja_id']}\">";
             echo "</form>";
         }
 
-        if (isset($_POST["zmiana"])) {
-            $query = "UPDATE `promocja` SET promocja = '{$_POST['nowa_nazwa_promocjii']}' WHERE promocja_id = {$_POST['id']}";
+        if (isset($_GET['czy_dodac'])) {
+            echo "<form  method=\"post\">";
+            echo "<tr>";
+            echo "<td> <input name=\"nazwa_promocji\"> </td>";
+            echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
+            echo "</tr>";
+            echo "</form>";
+        }
+
+        if (isset($_POST["zmiana"]) && !empty($_POST['nowa_nazwa_promocjii'])) {
+            $nowaNazwaPromocji = htmlspecialchars($_POST['nowa_nazwa_promocjii']);
+            
+            $query = "UPDATE `promocja` SET promocja = '{$nowaNazwaPromocji}' WHERE promocja_id = {$_POST['id']}";
             $connection->query($query);
+
             header("Location: promocje.php");
+        } else if (empty($_POST['nowa_nazwa_promocjii'])) {
+            errorBlock("Prosze uzupelnic pole", "promocje.php");
         }
 
         if (isset($_POST["usun"])) {
@@ -60,12 +68,15 @@
             header("Location: promocje.php");
         }
 
-        if (isset($_POST['submit']))
-        {
-            $query = "INSERT INTO `promocja` (promocja) VALUES ('{$_POST['nazwa_promocji']}')";
+        if (isset($_POST['submit']) && !empty($_POST['nazwa_promocji'])) {
+            $nazwaPromocji = htmlspecialchars($_POST['nazwa_promocji']);
+
+            $query = "INSERT INTO `promocja` (promocja) VALUES ('{$nazwaPromocji}')";
             $connection->query($query);
 
             header("Location: promocje.php");
+        } else if (empty($_POST['nazwa_promocji'])) {
+            errorBlock("Prosze uzupelnic pole", "promocje.php");
         }
         ?>
     </section>

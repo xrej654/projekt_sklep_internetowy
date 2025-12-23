@@ -23,28 +23,30 @@
         $result = $connection->query($query);
 
         echo "<table> <tr> <th>producent</th> <th>Zmien</th> <th>Usun</th> </tr>";
+
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\"";
             echo "<tr>";
+
             if ($row['producent'] == $_POST['producent'] && isset($_POST['zmien-formularz'])) {
                 echo "<td> <input name=\"nowa_nazwa_producenta\" value=\"{$_POST['producent']}\"> </td>";
                 echo "<input type=\"hidden\" name=\"producent\" value=\"{$_POST['producent']}\">";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
             } else {
                 echo "<td>" . $row['producent'] . "</td>";
-                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true)
+
+                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
-                else
-                    echo "<td style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
-                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true)
                     echo "<td> <button type=\"submit\" name=\"usun\">Usun</button> </td>";
-                else
-                    echo "<td style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
+                } else
+                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
             }
+
             echo "<input type=\"hidden\" name=\"producent\" value=\"{$row['producent']}\">";
             echo "</tr>";
             echo "</form>";
         }
+
         if (isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] == true) {
             echo "<form method=\"post\"";
             echo "<tr>";
@@ -53,6 +55,7 @@
             echo "</tr>";
             echo "</form>";
         }
+
         echo "</table>";
 
         if (isset($_POST["submit"])) {
@@ -68,14 +71,16 @@
         if (isset($_POST["zmien"]) && !empty($_POST['producent']) && !empty($_POST["nowa_nazwa_producenta"])) {
             $query = "UPDATE `producent` SET producent='{$_POST['nowa_nazwa_producenta']}' WHERE producent = '{$_POST['producent']}'";
             $connection->query($query);
+
             header("Location: producent.php");
-        } else if (!empty($_POST["nowa_nazwa_producenta"])) {
+        } else if (empty($_POST["nowa_nazwa_producenta"])) {
             errorBlock("Prosze uzupelnic pole", "producent.php");
         }
 
         if (isset($_POST["usun"]) && !empty($_POST['producent'])) {
             $query = "DELETE FROM `producent` WHERE producent='{$_POST['producent']}'";
             $connection->query($query);
+
             header("Location: producent.php");
         }
         ?>

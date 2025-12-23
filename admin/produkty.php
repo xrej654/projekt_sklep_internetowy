@@ -23,16 +23,20 @@
         $result = $connection->query($query);
 
         echo "<table> <tr> <th>Nazwa</th> <th>Kategoria</th> <th>Cena</th> <th>Fotografia</th> <th>Producent</th> <th>Opis</th> <th>Ilosc</th> <th>Zmien</th> <th>Usun</th> </tr>";
+
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
+
             if (isset($_POST["zmien-formularz"]) && $_POST["id"] == $row["produkt_id"]) {
                 echo "<tr>";
                 echo "<td> <input name=\"nazwa\" value=\"{$row["nazwa"]}\"> </td>";
                 echo "<td> <select name=\"kategoria\">";
 
                 echo "<option selected value='{$row["kategoria_id"]}'>{$row["kategoria"]}</option>";
+
                 $query = "SELECT * FROM `kategoria`";
                 $result = $connection->query($query);
+
                 while ($rowTmp = $result->fetch_assoc()) {
                     if ($rowTmp["kategoria"] != $row["kategoria"])
                         echo "<option value='{$rowTmp["kategoria_id"]}'>{$rowTmp["kategoria"]}</option>";
@@ -44,9 +48,11 @@
                 echo "<td> <input name=\"fotografia\" value=\"{$row["fotografia"]}\"> </td>";
 
                 echo "<td> <select name=\"producent\">";
+
                 echo "<option selected value='{$row['producent_id']}'>{$row["producent"]}</option>";
                 $query = "SELECT * FROM `producent`";
                 $result = $connection->query($query);
+
                 while ($rowTmp = $result->fetch_assoc()) {
                     if ($rowTmp["producent"] != $row["producent"])
                         echo "<option value='{$rowTmp["producent_id"]}'>{$rowTmp["producent"]}</option>";
@@ -65,14 +71,12 @@
                 echo "<td>" . $row['producent'] . "</td>";
                 echo "<td style=\"width: 10vw;\">" . $row['opis'] . "</td>";
                 echo "<td>" . $row['ilosc'] . "</td>";
-                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true)
+
+                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
-                else
-                    echo "<td style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
-                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true)
                     echo "<td> <button type=\"submit\" name=\"usun\">Usun</button> </td>";
-                else
-                    echo "<td style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
+                } else
+                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
             }
 
             echo "<input type=\"hidden\" name=\"id\" value=\"{$row["produkt_id"]}\"";
@@ -88,6 +92,7 @@
 
             $query = "SELECT * FROM `kategoria`";
             $result = $connection->query($query);
+
             while ($row = $result->fetch_assoc()) {
                 echo "<option value='{$row["kategoria_id"]}'>{$row["kategoria"]}</option>";
             }
@@ -99,6 +104,7 @@
 
             $query = "SELECT * FROM `producent`";
             $result = $connection->query($query);
+
             while ($row = $result->fetch_assoc()) {
                 echo "<option value='{$row["producent_id"]}'>{$row["producent"]}</option>";
             }
@@ -111,34 +117,63 @@
             echo "</tr>";
         }
 
-        if (isset($_POST["submit"])) {
+        if (
+            isset($_POST["submit"]) &&
+            !(empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+        ) {
+            $nazwa = htmlspecialchars($_POST['nazwa']);
+            $kategoria = htmlspecialchars($_POST['kategoria']);
+            $cena = htmlspecialchars($_POST['cena']);
+            $fotografia = htmlspecialchars($_POST['fotografia']);
+            $producent = htmlspecialchars($_POST['producent']);
+            $opis = htmlspecialchars($_POST['opis']);
+
             $query = "INSERT INTO `produkt` 
             (nazwa, kategoria_id, cena, fotografia, producent_id, opis, ilosc) 
             VALUES 
-            ('{$_POST["nazwa_produktu"]}','{$_POST["kategoria"]}','{$_POST["cena"]}','{$_POST["fotografia"]}'
-            ,'{$_POST["producent"]}','{$_POST["opis"]}','{$_POST["ilosc"]}')";
+            ('{$nazwa_produktu}','{$kategoria}','{$cena}','{$fotografia}'
+            ,'{$producent}','{$opis}','{$ilosc}')";
 
             $connection->query($query);
 
             header("Location: produkty.php");
+        } else if (
+            empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
+        ) {
+            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
-        if (isset($_POST['zmiana'])) {
+        if (
+            isset($_POST['zmiana']) &&
+            !(empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+        ) {
+            $nazwa = htmlspecialchars($_POST['nazwa']);
+            $kategoria = htmlspecialchars($_POST['kategoria']);
+            $cena = htmlspecialchars($_POST['cena']);
+            $fotografia = htmlspecialchars($_POST['fotografia']);
+            $producent = htmlspecialchars($_POST['producent']);
+            $opis = htmlspecialchars($_POST['opis']);
+            $ilosc = htmlspecialchars($_POST['ilosc']);
+
             $query = "UPDATE `produkt` 
             SET 
-            nazwa='{$_POST['nazwa']}',
-            kategoria_id='{$_POST['kategoria']}',
-            cena={$_POST['cena']},
-            fotografia='{$_POST['fotografia']}',
-            producent_id='{$_POST['producent']}',
-            opis='{$_POST['opis']}',
-            ilosc={$_POST['ilosc']}
+            nazwa='{$nazwa}',
+            kategoria_id='{$kategoria}',
+            cena={$cena},
+            fotografia='{$fotografia}',
+            producent_id='{$producent}',
+            opis='{$opis}',
+            ilosc={$ilosc}
             WHERE produkt_id = '{$_POST['id']}'
             ";
 
             $connection->query($query);
 
             header("Location: produkty.php");
+        } else if (
+            empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
+        ) {
+            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
         if (isset($_POST["usun"])) {

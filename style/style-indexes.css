@@ -16,6 +16,7 @@
 
 .wyszukiwarka {
     width: 40vw;
+    height: 3vh;
 }
 
 .szukaj {
@@ -23,7 +24,7 @@
     justify-content: center;
     align-items: center;
     width: 5vw;
-    height: 30%;
+    height: 40%;
     margin-right: 20vw;
 }
 
