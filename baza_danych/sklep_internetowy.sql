@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2025 at 03:00 PM
+-- Generation Time: Dec 23, 2025 at 09:00 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -182,8 +182,7 @@ CREATE TABLE `produkt` (
 --
 
 INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografia`, `producent_id`, `opis`, `ilosc`) VALUES
-(1, 'Xiaomi redmi note 8T', 1, 800, '', 1, 'telefon', 200),
-(2, 'Acer nitro 5', 1, 5000, '', 1, 'komputer', 100);
+(1, 'Xiaomi ', 1, 2000, '', 1, 'telefon', 50);
 
 -- --------------------------------------------------------
 
@@ -192,9 +191,16 @@ INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografi
 --
 
 CREATE TABLE `promocja` (
-  `promocja_id` int(10) UNSIGNED NOT NULL,
+  `promocja_id` tinyint(3) UNSIGNED NOT NULL,
   `promocja` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `promocja`
+--
+
+INSERT INTO `promocja` (`promocja_id`, `promocja`) VALUES
+(2, 'Black Friday');
 
 -- --------------------------------------------------------
 
@@ -203,10 +209,10 @@ CREATE TABLE `promocja` (
 --
 
 CREATE TABLE `promocja_produkt` (
-  `promocja_produkt_id` int(10) UNSIGNED NOT NULL,
-  `produkt_id` int(10) UNSIGNED NOT NULL,
-  `promocja_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `promocja_produkt_id` int(11) NOT NULL,
+  `promocja_id` tinyint(3) UNSIGNED NOT NULL,
+  `produkt_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -343,9 +349,8 @@ ALTER TABLE `promocja`
 -- Indeksy dla tabeli `promocja_produkt`
 --
 ALTER TABLE `promocja_produkt`
-  ADD PRIMARY KEY (`promocja_produkt_id`),
-  ADD KEY `produkt_id` (`produkt_id`,`promocja_id`),
-  ADD KEY `promocja_id` (`promocja_id`);
+  ADD KEY `promocja_id` (`promocja_id`,`produkt_id`),
+  ADD KEY `produkt_id` (`produkt_id`);
 
 --
 -- Indeksy dla tabeli `token_reset`
@@ -438,13 +443,7 @@ ALTER TABLE `produkt`
 -- AUTO_INCREMENT for table `promocja`
 --
 ALTER TABLE `promocja`
-  MODIFY `promocja_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `promocja_produkt`
---
-ALTER TABLE `promocja_produkt`
-  MODIFY `promocja_produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `token_reset`
@@ -512,8 +511,8 @@ ALTER TABLE `produkt`
 -- Constraints for table `promocja_produkt`
 --
 ALTER TABLE `promocja_produkt`
-  ADD CONSTRAINT `promocja_produkt_ibfk_1` FOREIGN KEY (`promocja_id`) REFERENCES `promocja` (`promocja_id`),
-  ADD CONSTRAINT `promocja_produkt_ibfk_2` FOREIGN KEY (`produkt_id`) REFERENCES `produkt` (`produkt_id`);
+  ADD CONSTRAINT `promocja_produkt_ibfk_1` FOREIGN KEY (`produkt_id`) REFERENCES `produkt` (`produkt_id`),
+  ADD CONSTRAINT `promocja_produkt_ibfk_2` FOREIGN KEY (`promocja_id`) REFERENCES `promocja` (`promocja_id`);
 
 --
 -- Constraints for table `token_reset`
