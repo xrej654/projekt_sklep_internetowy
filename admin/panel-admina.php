@@ -17,7 +17,7 @@
         <a href="producent.php">Producenci</a>
         <a href="">Galeria zdjec</a>
         <a href="promocje.php">Promocje</a>
-        <a href="">Promocja-produkt</a>
+        <a href="sposob-dodania-promocji.php">Promocja-produkt</a>
 
         <a href="../zalogowany/zalogowany-index.php">Anuluj</a>
     </section>

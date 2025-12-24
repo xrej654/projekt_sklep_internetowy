@@ -28,12 +28,14 @@
             echo "<form method=\"post\"";
             echo "<tr>";
 
-            if ($row['producent'] == $_POST['producent'] && isset($_POST['zmien-formularz'])) {
+            $producent = htmlspecialchars($row['producent']);
+
+            if ($producent == $_POST['producent'] && isset($_POST['zmien-formularz'])) {
                 echo "<td> <input name=\"nowa_nazwa_producenta\" value=\"{$_POST['producent']}\"> </td>";
                 echo "<input type=\"hidden\" name=\"producent\" value=\"{$_POST['producent']}\">";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
             } else {
-                echo "<td>" . $row['producent'] . "</td>";
+                echo "<td>" . $producent . "</td>";
 
                 if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
@@ -42,7 +44,7 @@
                     echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
             }
 
-            echo "<input type=\"hidden\" name=\"producent\" value=\"{$row['producent']}\">";
+            echo "<input type=\"hidden\" name=\"producent\" value=\"{$producent}\">";
             echo "</tr>";
             echo "</form>";
         }

@@ -27,50 +27,62 @@
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
 
+            $nazwa = htmlspecialchars($row['nazwa']);
+            $kategoria = htmlspecialchars($row['kategoria']);
+            $cena = htmlspecialchars($row['cena']);
+            $fotografia = htmlspecialchars($row['fotografia']);
+            $producent = htmlspecialchars($row['producent']);
+            $opis = htmlspecialchars($row['opis']);
+            $ilosc = htmlspecialchars($row['ilosc']);
+
             if (isset($_POST["zmien-formularz"]) && $_POST["id"] == $row["produkt_id"]) {
                 echo "<tr>";
-                echo "<td> <input name=\"nazwa\" value=\"{$row["nazwa"]}\"> </td>";
+                echo "<td> <input name=\"nazwa\" value=\"{$nazwa}\"> </td>";
                 echo "<td> <select name=\"kategoria\">";
 
-                echo "<option selected value='{$row["kategoria_id"]}'>{$row["kategoria"]}</option>";
+                echo "<option selected value='{$row["kategoria_id"]}'>{$kategoria}</option>";
 
                 $query = "SELECT * FROM `kategoria`";
                 $result = $connection->query($query);
 
                 while ($rowTmp = $result->fetch_assoc()) {
-                    if ($rowTmp["kategoria"] != $row["kategoria"])
-                        echo "<option value='{$rowTmp["kategoria_id"]}'>{$rowTmp["kategoria"]}</option>";
+                    if ($rowTmp["kategoria"] != $kategoria) {
+                        $inneKategorie = htmlspecialchars($rowTmp['kategoria']);
+                        echo "<option value='{$rowTmp["kategoria_id"]}'>{$inneKategorie}</option>";
+                    }
                 }
 
                 echo "</select></td>";
 
-                echo "<td> <input name=\"cena\" value=\"{$row["cena"]}\"> </td>";
-                echo "<td> <input name=\"fotografia\" value=\"{$row["fotografia"]}\"> </td>";
+                echo "<td> <input name=\"cena\" value=\"{$cena}\"> </td>";
+                echo "<td> <input name=\"fotografia\" value=\"{$fotografia}\"> </td>";
 
                 echo "<td> <select name=\"producent\">";
 
-                echo "<option selected value='{$row['producent_id']}'>{$row["producent"]}</option>";
+                echo "<option selected value='{$row['producent_id']}'>{$producent}</option>";
                 $query = "SELECT * FROM `producent`";
                 $result = $connection->query($query);
 
                 while ($rowTmp = $result->fetch_assoc()) {
-                    if ($rowTmp["producent"] != $row["producent"])
-                        echo "<option value='{$rowTmp["producent_id"]}'>{$rowTmp["producent"]}</option>";
+                    if ($rowTmp["producent"] != $producent) {
+                        $innyProducent = htmlspecialchars($rowTmp['producent']);
+                        echo "<option value='{$rowTmp["producent_id"]}'>{$innyProducent}</option>";
+                    }
                 }
 
                 echo "</select></td>";
-                echo "<td> <textarea name=\"opis\">{$row["opis"]}</textarea> </td>";
-                echo "<td> <input name=\"ilosc\" value=\"{$row["ilosc"]}\"> </td>";
+                echo "<td> <textarea name=\"opis\">{$opis}</textarea> </td>";
+                echo "<td> <input name=\"ilosc\" value=\"{$ilosc}\"> </td>";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmiana\">Zmien</button> </td>";
             } else {
                 echo "<tr>";
-                echo "<td>" . $row['nazwa'] . "</td>";
-                echo "<td>" . $row['kategoria'] . "</td>";
-                echo "<td>" . $row['cena'] . "</td>";
-                echo "<td>" . $row['fotografia'] . "</td>";
-                echo "<td>" . $row['producent'] . "</td>";
-                echo "<td style=\"width: 10vw;\">" . $row['opis'] . "</td>";
-                echo "<td>" . $row['ilosc'] . "</td>";
+                echo "<td>" . $nazwa . "</td>";
+                echo "<td>" . $kategoria . "</td>";
+                echo "<td>" . $cena . "</td>";
+                echo "<td>" . $fotografia . "</td>";
+                echo "<td>" . $producent . "</td>";
+                echo "<td style=\"width: 10vw;\">" . $opis . "</td>";
+                echo "<td>" . $ilosc . "</td>";
 
                 if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
@@ -94,7 +106,8 @@
             $result = $connection->query($query);
 
             while ($row = $result->fetch_assoc()) {
-                echo "<option value='{$row["kategoria_id"]}'>{$row["kategoria"]}</option>";
+                $kategoria = htmlspecialchars($row['kategoria']);
+                echo "<option value='{$row["kategoria_id"]}'>{$kategoria}</option>";
             }
 
             echo "</select></td>";
@@ -106,7 +119,8 @@
             $result = $connection->query($query);
 
             while ($row = $result->fetch_assoc()) {
-                echo "<option value='{$row["producent_id"]}'>{$row["producent"]}</option>";
+                $producent = htmlspecialchars($row["producent"]);
+                echo "<option value='{$row["producent_id"]}'>{$producent}</option>";
             }
 
             echo "</select></td>";
@@ -127,6 +141,7 @@
             $fotografia = htmlspecialchars($_POST['fotografia']);
             $producent = htmlspecialchars($_POST['producent']);
             $opis = htmlspecialchars($_POST['opis']);
+            $ilosc = htmlspecialchars($_POST['ilosc']);
 
             $query = "INSERT INTO `produkt` 
             (nazwa, kategoria_id, cena, fotografia, producent_id, opis, ilosc) 

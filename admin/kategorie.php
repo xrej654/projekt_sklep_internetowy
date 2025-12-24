@@ -28,14 +28,14 @@
             echo "<form method=\"post\"";
             echo "<tr>";
 
-            if ($row['kategoria'] == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) {
-                $kategoria = htmlspecialchars($_POST['kategoria']);
+            $kategoria = htmlspecialchars($_POST['kategoria']);
 
+            if ($kategoria == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) {
                 echo "<td> <input name=\"nowa_nazwa_kategorii\" value=\"{$kategoria}\"> </td>";
                 echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
             } else {
-                echo "<td>" . $row['kategoria'] . "</td>";
+                echo "<td>" . $kategoria . "</td>";
 
                 if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
@@ -44,7 +44,7 @@
                     echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
             }
 
-            echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$row['kategoria']}\">";
+            echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
             echo "</tr>";
             echo "</form>";
         }

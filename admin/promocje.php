@@ -57,7 +57,7 @@
             $connection->query($query);
 
             header("Location: promocje.php");
-        } else if (empty($_POST['nowa_nazwa_promocjii'])) {
+        } else if (empty($_POST['nowa_nazwa_promocjii']) && isset($_POST['submit'])) {
             errorBlock("Prosze uzupelnic pole", "promocje.php");
         }
 
@@ -75,7 +75,7 @@
             $connection->query($query);
 
             header("Location: promocje.php");
-        } else if (empty($_POST['nazwa_promocji'])) {
+        } else if (empty($_POST['nazwa_promocji']) && isset($_POST['submit'])) {
             errorBlock("Prosze uzupelnic pole", "promocje.php");
         }
         ?>
