@@ -12,7 +12,7 @@
 
 <body>
     <section class="tabelka-panelu">
-        <a href="panel-admina.php">Anuluj</a>
+        <a href="sposob-dodania-promocji.php">Anuluj</a>
         <a href="">Dodaj</a>
         <?php
         include("../config/config.php");

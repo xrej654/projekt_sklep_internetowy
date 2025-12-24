@@ -16,7 +16,7 @@
         <a href="promocja-producent.php">Poprzez producenta</a>
         <a href="promocja-produkt.php">Poprzez produkt</a>
 
-        <a href=".panel-admina.php">Anuluj</a>
+        <a href="panel-admina.php">Anuluj</a>
     </section>
 </body>
 
