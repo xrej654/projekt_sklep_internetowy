@@ -33,7 +33,7 @@
                 <br>
                 <button type="submit">Zmien</button>
                 <br>
-                <a href="edytuj-konto.php">Anuluj</a>
+                <a href="../edytuj-konto.php">Anuluj</a>
             </form>
         </div>
     </section>
@@ -53,7 +53,7 @@
             $query = "UPDATE `konto` SET haslo='{noweHaslo}' WHERE nazwa_uzytkownika='{$_SESSION['nazwa_uzytkownika']}'";
             $connection->query($query);
 
-            header("Location: edytuj-konto.php");
+            header("Location: ../edytuj-konto.php");
         } else {
             errorBlock("Haslo jest nie zgodne", "zmien-haslo.php");
         }

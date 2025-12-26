@@ -12,9 +12,13 @@
 
 <body>
     <section class="panel">
-        <a href="promocja-kategoria.php">Poprzez kategorie</a>
-        <a href="promocja-producent.php">Poprzez producenta</a>
-        <a href="promocja-produkt.php">Poprzez produkt</a>
+        <a href="dodawanie-promocji/promocja-kategoria-dodaj.php">Poprzez kategorie (dodaj)</a>
+        <a href="dodawanie-promocji/promocja-producent-dodaj.php">Poprzez producenta (dodaj)</a>
+        <a href="dodawanie-promocji/promocja-produkt-dodaj.php">Poprzez produkt (dodaj)</a>
+
+        <a href="usuwanie-promocji/promocja-kategoria-usun.php">Poprzez kategorie (usun)</a>
+        <a href="usuwanie-promocji/promocja-producent-usun.php">Poprzez producenta (usun)</a>
+        <a href="usuwanie-promocji/promocja-produkt-usun.php">Poprzez produkt (usun)</a>
 
         <a href="panel-admina.php">Anuluj</a>
     </section>

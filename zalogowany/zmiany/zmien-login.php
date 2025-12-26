@@ -32,7 +32,7 @@
                 <br>
                 <button type="submit" name="submit">Zmien</button>
                 <br>
-                <a href="edytuj-konto.php">Anuluj</a>
+                <a href="../edytuj-konto.php">Anuluj</a>
             </form>
         </div>
     </section>
@@ -54,7 +54,7 @@
 
             $_SESSION["nazwa_uzytkownika"] = $nowyLogin;
 
-            header("Location: edytuj-konto.php");
+            header("Location: ../edytuj-konto.php");
         } else {
             errorBlock("Loginy nie moga byc takie same", "zmien-login.php");
         }

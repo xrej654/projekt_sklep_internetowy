@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2025 at 09:00 PM
+-- Generation Time: Dec 26, 2025 at 09:16 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -200,7 +200,9 @@ CREATE TABLE `promocja` (
 --
 
 INSERT INTO `promocja` (`promocja_id`, `promocja`) VALUES
-(2, 'Black Friday');
+(1, 'Black Friday'),
+(5, 'Winter sales'),
+(6, 'Summer 50% off');
 
 -- --------------------------------------------------------
 
@@ -209,7 +211,7 @@ INSERT INTO `promocja` (`promocja_id`, `promocja`) VALUES
 --
 
 CREATE TABLE `promocja_produkt` (
-  `promocja_produkt_id` int(11) NOT NULL,
+  `promocja_produkt_id` int(11) UNSIGNED NOT NULL,
   `promocja_id` tinyint(3) UNSIGNED NOT NULL,
   `produkt_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
@@ -349,6 +351,7 @@ ALTER TABLE `promocja`
 -- Indeksy dla tabeli `promocja_produkt`
 --
 ALTER TABLE `promocja_produkt`
+  ADD PRIMARY KEY (`promocja_produkt_id`),
   ADD KEY `promocja_id` (`promocja_id`,`produkt_id`),
   ADD KEY `produkt_id` (`produkt_id`);
 
@@ -443,7 +446,13 @@ ALTER TABLE `produkt`
 -- AUTO_INCREMENT for table `promocja`
 --
 ALTER TABLE `promocja`
-  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `promocja_produkt`
+--
+ALTER TABLE `promocja_produkt`
+  MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `token_reset`

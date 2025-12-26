@@ -25,8 +25,8 @@
         </div>
 
         <div class="kolumna-prawa">
-            <a href="zmien-login.php">Zmien nazwe uzytkownika</a>
-            <a href="zmien-haslo.php">Zmien haslo</a>
+            <a href="zmiany/zmien-login.php">Zmien nazwe uzytkownika</a>
+            <a href="zmiany/zmien-haslo.php">Zmien haslo</a>
             <a href="zalogowany-index.php">Anuluj</a>
             <a href="../index.php">Wyloguj</a>
         </div>

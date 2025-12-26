@@ -12,7 +12,7 @@
 
 <body>
     <section class="tabelka-panelu">
-        <a href="sposob-dodania-promocji.php">Anuluj</a>
+        <a href="../sposob-dodania-promocji.php">Anuluj</a>
         <a href="">Dodaj</a>
         <?php
         include("../config/config.php");
@@ -49,9 +49,9 @@
         if (isset($_POST['submit'])) {
             foreach ($_POST['ids'] as $id) {
                 $query = "SELECT * FROM `promocja_produkt` WHERE promocja_id = {$_POST['promocja']} AND produkt_id = {$id}";
-                $result = $connection->query($query);       
+                $relations = $connection->query($query);       
 
-                if ($result->num_rows == 0) {
+                if ($relations->num_rows == 0) {
                     $query = "INSERT INTO `promocja_produkt` (promocja_id, produkt_id) VALUES ({$_POST['promocja']}, {$id})";
                     $connection->query($query);
                 }
