@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sklep internetowy</title>
-    <link rel="stylesheet" href="../style/style-globalne.css">
-    <link rel="shortcut icon" href="../assets/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../style/style-tabelka-panelu.css">
+    <link rel="stylesheet" href="../../style/style-globalne.css">
+    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../style/style-tabelka-panelu.css">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
         <a href="../sposob-dodania-promocji.php">Anuluj</a>
         <a href="">Dodaj</a>
         <?php
-        include("../config/config.php");
+        include("../../config/config.php");
 
         error_reporting(E_ALL & ~E_WARNING);
 

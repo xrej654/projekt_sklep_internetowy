@@ -75,7 +75,7 @@
             $connection->query($query);
 
             header("Location: producent.php");
-        } else if (empty($_POST["nowa_nazwa_producenta"])) {
+        } else if (isset($_POST['submit']) && empty($_POST["nowa_nazwa_producenta"])) {
             errorBlock("Prosze uzupelnic pole", "producent.php");
         }
 
