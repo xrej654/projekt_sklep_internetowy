@@ -19,7 +19,7 @@
 
         error_reporting(E_ALL & ~E_WARNING);
 
-        $query = "SELECT * FROM `kategoria`";
+        $query = "SELECT DISTINCT *  FROM `kategoria`";
         $result = $connection->query($query);
 
         echo "<table> <tr> <th>Kategoria</th> <th>Zmien</th> <th>Usun</th> </tr>";
@@ -28,14 +28,14 @@
             echo "<form method=\"post\"";
             echo "<tr>";
 
-            $kategoria = $_POST["kategoria"];
+            $kategoria = htmlspecialchars($row['kategoria']);
 
             if ($kategoria == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) {
                 echo "<td> <input name=\"nowa_nazwa_kategorii\" value=\"{$kategoria}\"> </td>";
                 echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
             } else {
-                echo "<td>{$row['kategoria']}</td>";
+                echo "<td>" . $kategoria . "</td>";
 
                 if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
@@ -60,6 +60,7 @@
 
         echo "</table>";
 
+        if (isset($_POST["submit"])) {
             if (isset($_POST['submit']) && empty($_POST["nazwa_kategorii"])) {
                 errorBlock("Prosze wypelnic pole", "kategorie.php");
             } else {
@@ -70,6 +71,7 @@
 
                 header("Location: kategorie.php");
             }
+        }
 
         if (isset($_POST["zmien"]) && !empty($_POST['kategoria']) && !empty($_POST["nowa_nazwa_kategorii"])) {
             $kategoria = htmlspecialchars($_POST['kategoria']);
