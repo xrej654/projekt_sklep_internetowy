@@ -55,7 +55,14 @@
                 echo "</select></td>";
 
                 echo "<td> <input name=\"cena\" value=\"{$cena}\"> </td>";
-                echo "<td> <input name=\"fotografia\" value=\"{$fotografia}\"> </td>";
+                $linkiDoFotografii = glob("../assets/Product_images/*");
+                echo "<td>";
+                echo "<select name=\"fotografia\">";
+                foreach ($linkiDoFotografii as $link) {
+                    echo "<option>{$link}</option>";
+                }
+                echo "</select>";
+                echo "</td>";
 
                 echo "<td> <select name=\"producent\">";
 
@@ -112,7 +119,14 @@
 
             echo "</select></td>";
             echo "<td> <input type=\"number\" name=\"cena\"> </td>";
-            echo "<td> <input name=\"fotografia\"> </td>";
+            $linkiDoFotografii = glob("../assets/Product_images/*");
+            echo "<td>";
+            echo "<select name=\"fotografia\">";
+            foreach ($linkiDoFotografii as $link) {
+                echo "<option>{$link}</option>";
+            }
+            echo "</select>";
+            echo "</td>";
             echo "<td> <select name=\"producent\">";
 
             $query = "SELECT * FROM `producent`";
@@ -154,7 +168,8 @@
             header("Location: produkty.php");
         } else if (
             isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
-        )) {
+            )
+        ) {
             errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
@@ -187,7 +202,8 @@
             header("Location: produkty.php");
         } else if (
             isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
-        )) {
+            )
+        ) {
             errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
