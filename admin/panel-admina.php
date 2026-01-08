@@ -15,7 +15,7 @@
         <a href="produkty.php">Produkty</a>
         <a href="kategorie.php">Kategorie</a>
         <a href="producent.php">Producenci</a>
-        <a href="">Galeria zdjec</a>
+        <a href="galeria-zdjec.php">Galeria zdjec</a>
         <a href="promocje.php">Promocje</a>
         <a href="sposob-dodania-promocji.php">Promocja-produkt</a>
 
