@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sklep internetowy</title>
-    <link rel="shortcut icon" href="../assets/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../style/style-globalne.css">
-    <link rel="stylesheet" href="../style/style-zmiana.css">
-    <link rel="stylesheet" href="../style/style-wspolne-formularze.css">
-    <link rel="stylesheet" href="../style/style-wspolne-zmiana-edytuj-konto.css">
+    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../style/style-globalne.css">
+    <link rel="stylesheet" href="../../style/style-zmiana.css">
+    <link rel="stylesheet" href="../../style/style-wspolne-formularze.css">
+    <link rel="stylesheet" href="../../style/style-wspolne-zmiana-edytuj-konto.css">
 </head>
 
 <body>
     <section class="zmiana">
         <div class="kolumna-lewa">
             <div class="img-background">
-                <img src="../assets/konto.png">
+                <img src="../../assets/konto.png">
             </div>
 
             <div class="nazwa-uzytkownika">
@@ -38,7 +38,7 @@
     </section>
 
     <?php
-    include("../config/config.php");
+    include("../../config/config.php");
 
     if (!empty($_POST['nowy_login'])) {
         $aktualnyLogin = $_SESSION['nazwa_uzytkownika'];
@@ -49,7 +49,7 @@
             $row = $result->fetch_assoc();
 
             $nowyLogin = htmlspecialchars($_POST['nowy_login']);
-            $query = "UPDATE `konto` SET nazwa_uzytkownika = '{nowyLogin}' WHERE nazwa_uzytkownika = '{$aktualnyLogin}'";
+            $query = "UPDATE `konto` SET nazwa_uzytkownika = '{$nowyLogin}' WHERE nazwa_uzytkownika = '{$aktualnyLogin}'";
             $connection->query($query);
 
             $_SESSION["nazwa_uzytkownika"] = $nowyLogin;
