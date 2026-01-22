@@ -23,7 +23,7 @@
         $result = $connection->query($query);
 
         echo "<table>";
-        echo "<tr> <th>Link zdjecia</th> <th>Produkt</th> <th>Zmien</th> <th>Usun</th>";
+        echo "<tr> <th>Link zdjecia</th> <th>Produkt</th> <th>Zmien</th> <th>Usun</th> </tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
             echo "<tr>";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2025 at 09:16 PM
+-- Generation Time: Sty 22, 2026 at 10:13 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -109,7 +109,7 @@ CREATE TABLE `konto` (
 --
 
 INSERT INTO `konto` (`konto_id`, `nazwa_uzytkownika`, `haslo`, `email`, `admin`) VALUES
-(1, 'Jonatan Knapik', '12345678', 'xrej.game@gmail.com', 1),
+(1, 'Jonasz', '12345678', 'xrej.game@gmail.com', 1),
 (2, 'kondzio', '12345678', 'nigger@czarnuch.pl', 0);
 
 -- --------------------------------------------------------
@@ -182,7 +182,8 @@ CREATE TABLE `produkt` (
 --
 
 INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografia`, `producent_id`, `opis`, `ilosc`) VALUES
-(1, 'Xiaomi ', 1, 2000, '', 1, 'telefon', 50);
+(1, 'Xiaomi ', 1, 2000, '../assets/Product_images/xiaomiredmi14pro-01.jpg', 1, 'telefon', 50),
+(23, 'Laptop Acer Nitro 5', 1, 5000, '../assets/Product_images/acernitro5-01.jpg', 2, 'Dla graczy', 100);
 
 -- --------------------------------------------------------
 
@@ -272,6 +273,20 @@ CREATE TABLE `zdjecia` (
   `link` varchar(70) NOT NULL,
   `produkt_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `zdjecia`
+--
+
+INSERT INTO `zdjecia` (`zdjecia_id`, `link`, `produkt_id`) VALUES
+(2, '../assets/Product_images/acernitro5-01.jpg', 23),
+(4, '../assets/Product_images/acernitro5-02.jpg', 23),
+(5, '../assets/Product_images/acernitro5-03.jpg', 23),
+(6, '../assets/Product_images/acernitro5-04.jpg', 23),
+(7, '../assets/Product_images/xiaomiredmi14pro-01.jpg', 1),
+(8, '../assets/Product_images/xiaomiredmi14pro-02.jpg', 1),
+(9, '../assets/Product_images/xiaomiredmi14pro-03.jpg', 1),
+(11, '../assets/Product_images/xiaomiredmi14pro-04.jpg', 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -440,7 +455,7 @@ ALTER TABLE `producent`
 -- AUTO_INCREMENT for table `produkt`
 --
 ALTER TABLE `produkt`
-  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `promocja`
@@ -476,7 +491,7 @@ ALTER TABLE `zamowienie_produkt`
 -- AUTO_INCREMENT for table `zdjecia`
 --
 ALTER TABLE `zdjecia`
-  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

@@ -58,6 +58,8 @@
                 $linkiDoFotografii = glob("../assets/Product_images/*");
                 echo "<td>";
                 echo "<select name=\"fotografia\">";
+                echo "<option selected value=\"{$fotografia}\">{$fotografia}</option>";
+
                 foreach ($linkiDoFotografii as $link) {
                     echo "<option>{$link}</option>";
                 }
@@ -108,6 +110,7 @@
             echo "<tr>";
             echo "<td> <input name=\"nazwa_produktu\"> </td>";
             echo "<td> <select name=\"kategoria\">";
+            echo "<option selected></option>";
 
             $query = "SELECT * FROM `kategoria`";
             $result = $connection->query($query);
@@ -118,16 +121,21 @@
             }
 
             echo "</select></td>";
-            echo "<td> <input type=\"number\" name=\"cena\"> </td>";
+            echo "<td> <input type=\"text\" name=\"cena\"> </td>";
+
             $linkiDoFotografii = glob("../assets/Product_images/*");
             echo "<td>";
             echo "<select name=\"fotografia\">";
+            echo "<option selected></option>";
+
             foreach ($linkiDoFotografii as $link) {
                 echo "<option>{$link}</option>";
             }
             echo "</select>";
             echo "</td>";
+
             echo "<td> <select name=\"producent\">";
+            echo "<option selected></option>";
 
             $query = "SELECT * FROM `producent`";
             $result = $connection->query($query);
@@ -147,9 +155,9 @@
 
         if (
             isset($_POST["submit"]) &&
-            !(empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+            (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
         ) {
-            $nazwa = htmlspecialchars($_POST['nazwa']);
+            $nazwa = htmlspecialchars($_POST['nazwa_produktu']);
             $kategoria = htmlspecialchars($_POST['kategoria']);
             $cena = htmlspecialchars($_POST['cena']);
             $fotografia = htmlspecialchars($_POST['fotografia']);
@@ -160,14 +168,24 @@
             $query = "INSERT INTO `produkt` 
             (nazwa, kategoria_id, cena, fotografia, producent_id, opis, ilosc) 
             VALUES 
-            ('{$nazwa_produktu}','{$kategoria}','{$cena}','{$fotografia}'
+            ('{$nazwa}','{$kategoria}','{$cena}','{$fotografia}'
             ,'{$producent}','{$opis}','{$ilosc}')";
 
             $connection->query($query);
 
+            $query = "SELECT produkt_id FROM `produkt` WHERE nazwa='{$nazwa}'";
+            $result = $connection->query($query);
+
+            $kolumna = $result->fetch_assoc();
+
+            $id = $kolumna['produkt_id'];
+
+            $query = "INSERT INTO `zdjecia` (produkt_id, link) VALUES ($id, '$fotografia')";
+            $connection->query($query);
+
             header("Location: produkty.php");
         } else if (
-            isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
+            isset($_POST['submit']) && (empty($_POST['nazwa']) || ($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
             )
         ) {
             errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
