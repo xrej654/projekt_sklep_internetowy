@@ -20,11 +20,11 @@
         error_reporting(E_ALL & ~E_WARNING);
 
         $query = "SELECT pc.producent_id AS producent_id, k.kategoria_id AS kategoria_id, pk.produkt_id AS produkt_id, pk.nazwa AS nazwa, k.kategoria AS kategoria, pk.cena AS cena, pk.fotografia AS fotografia, pc.producent AS producent, pk.opis AS opis, pk.ilosc AS ilosc FROM `produkt` pk JOIN `kategoria` k ON pk.kategoria_id = k.kategoria_id JOIN `producent` pc ON pk.producent_id = pc.producent_id";
-        $result = $connection->query($query);
+        $products = $connection->query($query);
 
         echo "<table> <tr> <th>Nazwa</th> <th>Kategoria</th> <th>Cena</th> <th>Fotografia</th> <th>Producent</th> <th>Opis</th> <th>Ilosc</th> <th>Zmien</th> <th>Usun</th> </tr>";
 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $products->fetch_assoc()) {
             echo "<form method=\"post\">";
 
             $nazwa = htmlspecialchars($row['nazwa']);
@@ -82,7 +82,7 @@
                 echo "</select></td>";
                 echo "<td> <textarea name=\"opis\">{$opis}</textarea> </td>";
                 echo "<td> <input name=\"ilosc\" value=\"{$ilosc}\"> </td>";
-                echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmiana\">Zmien</button> </td>";
+                echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmiana\">Zmien</button> </td> </tr>";
             } else {
                 echo "<tr>";
                 echo "<td>" . $nazwa . "</td>";
@@ -97,11 +97,10 @@
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
                     echo "<td> <button type=\"submit\" name=\"usun\">Usun</button> </td>";
                 } else
-                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
+                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td> </tr>";
             }
 
-            echo "<input type=\"hidden\" name=\"id\" value=\"{$row["produkt_id"]}\"";
-            echo "</tr>";
+            echo "<input type=\"hidden\" name=\"id\" value=\"{$row["produkt_id"]}\">";
             echo "</form>";
         }
 
@@ -147,7 +146,7 @@
 
             echo "</select></td>";
             echo "<td> <textarea name=\"opis\"></textarea> </td>";
-            echo "<td> <input type=\"numbr\" name=\"ilosc\"> </td>";
+            echo "<td> <input type=\"number\" name=\"ilosc\"> </td>";
             echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
             echo "</form>";
             echo "</tr>";
@@ -155,7 +154,7 @@
 
         if (
             isset($_POST["submit"]) &&
-            (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+            !(empty($_POST['nazwa_produktu']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
         ) {
             $nazwa = htmlspecialchars($_POST['nazwa_produktu']);
             $kategoria = htmlspecialchars($_POST['kategoria']);
@@ -171,16 +170,6 @@
             ('{$nazwa}','{$kategoria}','{$cena}','{$fotografia}'
             ,'{$producent}','{$opis}','{$ilosc}')";
 
-            $connection->query($query);
-
-            $query = "SELECT produkt_id FROM `produkt` WHERE nazwa='{$nazwa}'";
-            $result = $connection->query($query);
-
-            $kolumna = $result->fetch_assoc();
-
-            $id = $kolumna['produkt_id'];
-
-            $query = "INSERT INTO `zdjecia` (produkt_id, link) VALUES ($id, '$fotografia')";
             $connection->query($query);
 
             header("Location: produkty.php");

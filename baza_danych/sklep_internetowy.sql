@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sty 22, 2026 at 10:13 AM
+-- Generation Time: Feb 03, 2026 at 08:15 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -158,7 +158,7 @@ INSERT INTO `producent` (`producent_id`, `producent`) VALUES
 (1, 'Emiter'),
 (2, 'Elektret'),
 (3, 'Motorola'),
-(4, 'FirmaA');
+(4, 'Techland');
 
 -- --------------------------------------------------------
 
@@ -183,7 +183,10 @@ CREATE TABLE `produkt` (
 
 INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografia`, `producent_id`, `opis`, `ilosc`) VALUES
 (1, 'Xiaomi ', 1, 2000, '../assets/Product_images/xiaomiredmi14pro-01.jpg', 1, 'telefon', 50),
-(23, 'Laptop Acer Nitro 5', 1, 5000, '../assets/Product_images/acernitro5-01.jpg', 2, 'Dla graczy', 100);
+(23, 'Laptop Acer Nitro 5', 1, 5000, '../assets/Product_images/acernitro5-01.jpg', 2, 'Dla graczy', 100),
+(28, 'Telewizor Sharp QLED', 1, 4000, '../assets/Product_images/sharpQLED-01.jpg', 4, 'Telewizor z technologia QLED', 75),
+(29, 'Drukarka Brother', 1, 500, '../assets/Product_images/drukarkabrother-01.jpg', 1, 'Tania i nie zawodna drukarka', 255),
+(30, 'Iphone', 1, 7000, '../assets/Product_images/iphone15promax-01.jpg', 3, 'Telefon firmy motorola', 100);
 
 -- --------------------------------------------------------
 
@@ -203,7 +206,8 @@ CREATE TABLE `promocja` (
 INSERT INTO `promocja` (`promocja_id`, `promocja`) VALUES
 (1, 'Black Friday'),
 (5, 'Winter sales'),
-(6, 'Summer 50% off');
+(6, 'Summer 50% off'),
+(8, 'Aniversary sales');
 
 -- --------------------------------------------------------
 
@@ -279,14 +283,24 @@ CREATE TABLE `zdjecia` (
 --
 
 INSERT INTO `zdjecia` (`zdjecia_id`, `link`, `produkt_id`) VALUES
-(2, '../assets/Product_images/acernitro5-01.jpg', 23),
-(4, '../assets/Product_images/acernitro5-02.jpg', 23),
-(5, '../assets/Product_images/acernitro5-03.jpg', 23),
-(6, '../assets/Product_images/acernitro5-04.jpg', 23),
-(7, '../assets/Product_images/xiaomiredmi14pro-01.jpg', 1),
-(8, '../assets/Product_images/xiaomiredmi14pro-02.jpg', 1),
-(9, '../assets/Product_images/xiaomiredmi14pro-03.jpg', 1),
-(11, '../assets/Product_images/xiaomiredmi14pro-04.jpg', 1);
+(13, '../assets/Product_images/xiaomiredmi14pro-01.jpg', 1),
+(14, '../assets/Product_images/xiaomiredmi14pro-02.jpg', 1),
+(15, '../assets/Product_images/xiaomiredmi14pro-03.jpg', 1),
+(16, '../assets/Product_images/xiaomiredmi14pro-04.jpg', 1),
+(17, '../assets/Product_images/acernitro5-01.jpg', 23),
+(18, '../assets/Product_images/acernitro5-02.jpg', 23),
+(19, '../assets/Product_images/acernitro5-03.jpg', 23),
+(20, '../assets/Product_images/acernitro5-04.jpg', 23),
+(21, '../assets/Product_images/drukarkabrother-01.jpg', 29),
+(22, '../assets/Product_images/drukarkabrother-02.jpg', 29),
+(23, '../assets/Product_images/sharpQLED-01.jpg', 28),
+(24, '../assets/Product_images/sharpQLED-02.jpg', 28),
+(25, '../assets/Product_images/sharpQLED-03.jpg', 28),
+(26, '../assets/Product_images/sharpQLED-04.jpg', 28),
+(28, '../assets/Product_images/iphone15promax-01.jpg', 30),
+(29, '../assets/Product_images/iphone15promax-02.jpg', 30),
+(31, '../assets/Product_images/iphone15promax-03.jpg', 30),
+(32, '../assets/Product_images/iphone15promax-04.jpg', 30);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -419,7 +433,7 @@ ALTER TABLE `dokument`
 -- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
-  MODIFY `kategoria_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `kategoria_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `klient`
@@ -449,25 +463,25 @@ ALTER TABLE `ocena`
 -- AUTO_INCREMENT for table `producent`
 --
 ALTER TABLE `producent`
-  MODIFY `producent_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `producent_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `produkt`
 --
 ALTER TABLE `produkt`
-  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `promocja`
 --
 ALTER TABLE `promocja`
-  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `promocja_produkt`
 --
 ALTER TABLE `promocja_produkt`
-  MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `token_reset`
@@ -491,7 +505,7 @@ ALTER TABLE `zamowienie_produkt`
 -- AUTO_INCREMENT for table `zdjecia`
 --
 ALTER TABLE `zdjecia`
-  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

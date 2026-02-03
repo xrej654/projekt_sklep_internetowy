@@ -32,6 +32,7 @@
                 echo "<td>";
 
                 echo "<select name=\"fotografia\">";
+                echo "<option selected></option>";
                 foreach ($linkiDoFotografii as $link) {
                     echo "<option>{$link}</option>";
                 }
@@ -44,10 +45,10 @@
                 $query = "SELECT * FROM `produkt`";
                 $productResult = $connection->query($query);
 
-                echo "<select name=\"produkt_id\"";
-                echo "<option selected value=\"{$_POST['id']}\">{$row['nazwa']}</option>";
+                echo "<select name=\"produkt_id\">";
+                echo "<option selected></option>";
                 while ($productRow = $productResult->fetch_assoc()) {
-                    if ($productRow['produkt_id'] != $_POST['id'])
+                    if ($productRow['produkt_id'] != $row['produkt_id'])
                         echo "<option value=\"{$productRow['produkt_id']}\">{$productRow['nazwa']}</option>";
                 }
 
@@ -103,8 +104,8 @@
         }
 
         if (isset($_POST['zmiana'])) {
-            if (isset($_POST['fotografia']) && isset($_POST['product_id'])) {
-                $query = "UPDATE `zdjecia` SET link={$_POST['fotografia']}, product_id={$_POST['product_id']}";
+            if (isset($_POST['fotografia']) && isset($_POST['produkt_id'])) {
+                $query = "UPDATE `zdjecia` SET link='{$_POST['fotografia']}', produkt_id='{$_POST['produkt_id']}' WHERE zdjecia_id={$_POST['id']}";
                 $connection->query($query);
 
                 header("Location: galeria-zdjec.php");

@@ -77,7 +77,7 @@
             $kategoria = htmlspecialchars($_POST['kategoria']);
             $nowaNazwaKategorii = htmlspecialchars($_POST['nowa_nazwa_kategorii']);
 
-            $query = "UPDATE `kategoria` SET kategoria='{nowaNazwaKategorii}' WHERE kategoria = '{$kategoria}'";
+            $query = "UPDATE `kategoria` SET kategoria='{$nowaNazwaKategorii}' WHERE kategoria = '{$kategoria}'";
             $connection->query($query);
 
             header("Location: kategorie.php");
