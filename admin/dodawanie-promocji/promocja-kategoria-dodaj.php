@@ -25,6 +25,8 @@
         echo "<form method=\"post\">";
         echo "<table>";
         echo "<tr> <th>Kategoria</th> <th>Czy dodac promocje</th> <tr>";
+
+        //wyswietlanie kategorii
         while ($row = $result->fetch_assoc()) {
             $nazwa = htmlspecialchars($row['kategoria']);
             echo "<tr> <td style=\"padding:10px;\">{$nazwa}</td> <td><input type=\"checkbox\" name=\"ids[]\" value=\"{$row['kategoria_id']}\"></td> </tr>";
@@ -36,6 +38,7 @@
 
         echo "<select style=\"margin-left:4.5vw;\" name=\"promocja\">";
 
+        //wyswietlanie promocji
         while ($row = $result->fetch_assoc()) {
             $nazwa = htmlspecialchars($row['promocja']);
             echo "<option value=\"{$row['promocja_id']}\">{$nazwa}</option>";
@@ -46,6 +49,7 @@
         echo "<button style=\"margin-left:0.5vw;\" type=\"submit\" name=\"submit\">Dodaj promocje</button>";
         echo "</form>";
 
+        //dodawanie promocji wzgledem kategorii
         if (isset($_POST['submit'])) {
             $query = "SELECT * FROM `produkt` WHERE kategoria_id IN(" . implode(',', $_POST['ids']) . ")";
             $result = $connection->query($query);

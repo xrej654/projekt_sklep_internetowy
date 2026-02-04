@@ -19,16 +19,48 @@
 
         error_reporting(E_ALL & ~E_WARNING);
 
+        //kod z header najlepiej dac na poczatek aby nie bylo bledu
+        //kod kolejno za dodawanie, zmiane i usuwanie rekordow do bazy
+        if (isset($_POST['zmiana'])) {
+            if (isset($_POST['fotografia']) && isset($_POST['produkt_id'])) {
+                $query = "UPDATE `zdjecia` SET link='{$_POST['fotografia']}', produkt_id='{$_POST['produkt_id']}' WHERE zdjecia_id={$_POST['id']}";
+                $connection->query($query);
+
+                header("Location: galeria-zdjec.php");
+            } else {
+                errorBlock("Prosze uzupelnic pola", "galeria-zdjec.php");
+            }
+        }
+
+        if (isset($_POST['dodaj']))
+        {
+            $query = "INSERT INTO `zdjecia` (link, produkt_id) VALUES ('{$_POST['fotografia']}', '{$_POST['produkt_id']}')";
+            $connection->query($query);
+
+            header("Location: galeria-zdjec.php");
+        }
+
+        if (isset($_POST['usun'])) {
+            $query = "DELETE FROM `zdjecia` WHERE zdjecia_id={$_POST['id']}";
+            $connection->query($query);
+
+            header("Location: galeria-zdjec.php");
+        }
+
         $query = "SELECT * FROM `zdjecia` JOIN `produkt` USING(produkt_id)";
         $result = $connection->query($query);
 
         echo "<table>";
         echo "<tr> <th>Link zdjecia</th> <th>Produkt</th> <th>Zmien</th> <th>Usun</th> </tr>";
+
+        //wyswietlanie produktow
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
             echo "<tr>";
+
+            //formularz na zmiane danych
             if ($row['zdjecia_id'] == $_POST['id'] && isset($_POST['zmien'])) {
-                $linkiDoFotografii = glob("../assets/Product_images/*");
+                $linkiDoFotografii = glob("../assets/Product_images/*"); //zapis plikow jako tablica
                 echo "<td>";
 
                 echo "<select name=\"fotografia\">";
@@ -70,6 +102,7 @@
             echo "</form>";
         }
 
+        //formularz na dodawanie danych
         if (isset($_GET['czy_dodac']) && $_GET['czy_dodac'] == true) {
             echo "<form method=\"post\"";
             echo "<tr>";
@@ -102,33 +135,6 @@
             echo "</tr>";
             echo "<form>";
         }
-
-        if (isset($_POST['zmiana'])) {
-            if (isset($_POST['fotografia']) && isset($_POST['produkt_id'])) {
-                $query = "UPDATE `zdjecia` SET link='{$_POST['fotografia']}', produkt_id='{$_POST['produkt_id']}' WHERE zdjecia_id={$_POST['id']}";
-                $connection->query($query);
-
-                header("Location: galeria-zdjec.php");
-            } else {
-                errorBlock("Prosze uzupelnic pola", "galeria-zdjec.php");
-            }
-        }
-
-        if (isset($_POST['dodaj']))
-        {
-            $query = "INSERT INTO `zdjecia` (link, produkt_id) VALUES ('{$_POST['fotografia']}', '{$_POST['produkt_id']}')";
-            $connection->query($query);
-
-            header("Location: galeria-zdjec.php");
-        }
-
-        if (isset($_POST['usun'])) {
-            $query = "DELETE FROM `zdjecia` WHERE zdjecia_id={$_POST['id']}";
-            $connection->query($query);
-
-            header("Location: galeria-zdjec.php");
-        }
-
         echo "</table>";
         ?>
     </section>

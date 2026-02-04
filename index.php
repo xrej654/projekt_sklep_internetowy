@@ -34,6 +34,7 @@
     </section>
 
     <?php
+        // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
         session_destroy();
     ?>
 </body>

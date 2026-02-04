@@ -20,7 +20,7 @@
             </div>
 
             <div class="nazwa-uzytkownika">
-                <?php session_start();
+                <?php session_start(); //zdobywanie dostpeu do $_SEESION i wyswietlnie nazwy
                 echo htmlspecialchars($_SESSION['nazwa_uzytkownika']); ?>
             </div>
         </div>
@@ -41,23 +41,23 @@
     <?php
     include('../../config/config.php');
 
-    if (!empty($_POST['stare_haslo']) && !empty($_POST['nowe_haslo'])) {
+    if (!empty($_POST['stare_haslo']) && !empty($_POST['nowe_haslo'])) { //sprawdzanie czy pola nie sa puste
         $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='{$_SESSION['nazwa_uzytkownika']}'";
         $result = $connection->query($query);
         $row = $result->fetch_assoc();
 
-        if ($row['haslo'] === $_POST['nowe_haslo'] || $_POST['stare_haslo'] === $_POST['nowe_haslo']) {
+        if ($row['haslo'] === $_POST['nowe_haslo'] || $_POST['stare_haslo'] === $_POST['nowe_haslo']) { //sprawdzanie czy nowe haslo jest takie same (jesli tak wyswietlany blad)
             errorBlock("Nowe haslo nie moze byc takie same jak stare", "zmien-haslo.php");
-        } else if ($row['haslo'] === $_POST["stare_haslo"] && $_POST['nowe_haslo'] !== $row['haslo']) {
+        } else if ($row['haslo'] === $_POST["stare_haslo"] && $_POST['nowe_haslo'] !== $row['haslo']) { //hasla rone to robimy podmiane
             $noweHaslo = htmlspecialchars($_POST['nowe_haslo']);
             $query = "UPDATE `konto` SET haslo='{noweHaslo}' WHERE nazwa_uzytkownika='{$_SESSION['nazwa_uzytkownika']}'";
             $connection->query($query);
 
-            header("Location: ../edytuj-konto.php");
-        } else {
+            header("Location: ../edytuj-konto.php"); //przekierowanie do innego pliku podanego jako argument funkcji
+        } else { //warunek jezeli cos bylo nie tak to wyswietlanie bledu
             errorBlock("Haslo jest nie zgodne", "zmien-haslo.php");
         }
-    } else if ((empty($_POST['stare_haslo']) || empty($_POST['nowe_haslo'])) && isset($_POST["submit"])) {
+    } else if ((empty($_POST['stare_haslo']) || empty($_POST['nowe_haslo'])) && isset($_POST["submit"])) { //jesli sa puste pole to wyswietlamy blad
         errorBlock("Prosze wypelnic pola", "zmien-haslo.php");
     }
 

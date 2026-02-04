@@ -33,11 +33,12 @@
 
     session_start();
 
-    if (!empty($_POST['login']) && !empty($_POST['haslo'])) {
+    if (!empty($_POST['login']) && !empty($_POST['haslo'])) { //sprawdzanie czy pola nie sa puste
         $login = htmlspecialchars($_POST['login']);
         $haslo = htmlspecialchars($_POST['haslo']);
         $istnieje = false;
 
+        //sprawdzenie czy konto istnieje
         $query = "SELECT nazwa_uzytkownika FROM `konto`";
         $uzytkownicy = $connection->query($query);
 
@@ -49,11 +50,13 @@
         }
 
         if ($istnieje) {
+            //pobieranie hasla z bazy
             $query = "SELECT haslo FROM `konto` WHERE nazwa_uzytkownika='$login'";
             $result = $connection->query($query);
             $wiersz = $result->fetch_assoc();
             $haslo_baza_danych = $wiersz['haslo'];
 
+            //sprawdzenie zgosnosci z haslem i wpisywanie danych do sesji
             if ($haslo === $haslo_baza_danych) {
                 $_SESSION['nazwa_uzytkownika'] = $login;
                 $query = "SELECT admin FROM `konto` WHERE nazwa_uzytkownika='$login'";
@@ -61,8 +64,9 @@
                 $wiersz = $wynik->fetch_assoc();
 
                 $_SESSION['czy_admin'] = ($wiersz['admin'] == 1);
-                header("Location: ../zalogowany/zalogowany-index.php");
-                exit;
+                header("Location: ../zalogowany/zalogowany-index.php"); //przekierowanie do innego pliku
+    
+                //w nastepnych elsa'ach to wyswietlanie bledow jelsi cos pojdzie nie tak
             } else {
                 errorBlock("Haslo jest nie poprawne", "login.php");
             }

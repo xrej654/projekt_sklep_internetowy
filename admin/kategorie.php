@@ -19,47 +19,8 @@
 
         error_reporting(E_ALL & ~E_WARNING);
 
-        $query = "SELECT DISTINCT *  FROM `kategoria`";
-        $result = $connection->query($query);
-
-        echo "<table> <tr> <th>Kategoria</th> <th>Zmien</th> <th>Usun</th> </tr>";
-
-        while ($row = $result->fetch_assoc()) {
-            echo "<form method=\"post\"";
-            echo "<tr>";
-
-            $kategoria = htmlspecialchars($row['kategoria']);
-
-            if ($kategoria == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) {
-                echo "<td> <input name=\"nowa_nazwa_kategorii\" value=\"{$kategoria}\"> </td>";
-                echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
-                echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
-            } else {
-                echo "<td>" . $kategoria . "</td>";
-
-                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
-                    echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
-                    echo "<td> <button type=\"submit\" name=\"usun\">Usun</button> </td>";
-                } else
-                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
-            }
-
-            echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
-            echo "</tr>";
-            echo "</form>";
-        }
-
-        if (isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] == true) {
-            echo "<form method=\"post\"";
-            echo "<tr>";
-            echo "<td> <input name=\"nazwa_kategorii\"> </td>";
-            echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
-            echo "</tr>";
-            echo "</form>";
-        }
-
-        echo "</table>";
-
+        //kod z header najlepej napisac na poczatku aby nie bylo bledu
+        //kod obowiazuje kolejno za dodawanie, zmiana i usuwanie rekordow do bazy
         if (isset($_POST["submit"])) {
             if (isset($_POST['submit']) && empty($_POST["nazwa_kategorii"])) {
                 errorBlock("Prosze wypelnic pole", "kategorie.php");
@@ -93,6 +54,49 @@
 
             header("Location: kategorie.php");
         }
+
+        $query = "SELECT DISTINCT *  FROM `kategoria`";
+        $result = $connection->query($query);
+
+        echo "<table> <tr> <th>Kategoria</th> <th>Zmien</th> <th>Usun</th> </tr>";
+
+        //wyswietlnaie produktow
+        while ($row = $result->fetch_assoc()) {
+            echo "<form method=\"post\"";
+            echo "<tr>";
+
+            $kategoria = htmlspecialchars($row['kategoria']);
+
+            if ($kategoria == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) { //formualrz na zmiane rekodrow w bazie
+                echo "<td> <input name=\"nowa_nazwa_kategorii\" value=\"{$kategoria}\"> </td>";
+                echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
+                echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
+            } else {
+                echo "<td>" . $kategoria . "</td>";
+
+                if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
+                    echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
+                    echo "<td> <button type=\"submit\" name=\"usun\">Usun</button> </td>";
+                } else
+                    echo "<td colspan=\"2\" style=\"width:12.5vw;\">Dostepne jak zakonczysz formualrz dodawania</td>";
+            }
+
+            echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
+            echo "</tr>";
+            echo "</form>";
+        }
+
+        //formualrz na dodawanie nowych rekordow
+        if (isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] == true) {
+            echo "<form method=\"post\"";
+            echo "<tr>";
+            echo "<td> <input name=\"nazwa_kategorii\"> </td>";
+            echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
+            echo "</tr>";
+            echo "</form>";
+        }
+
+        echo "</table>";
         ?>
     </section>
 </body>

@@ -33,17 +33,19 @@
 
     session_start();
 
-    if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['haslo']) && !empty($_POST['powtorz_haslo'])) {
+    if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['haslo']) && !empty($_POST['powtorz_haslo'])) { //sprawdzenie czy pola nie sa puste
         $login = htmlspecialchars($_POST['login']);
         $email = htmlspecialchars($_POST['email']);
         $haslo = htmlspecialchars($_POST['haslo']);
         $powtorz_haslo = htmlspecialchars($_POST['powtorz_haslo']);
 
+        //sprawdzamy czy uzytkownik powtorzyl dobrze haslo i czy ma dobra dlugosc
         if ($haslo != $powtorz_haslo) {
             errorBlock("Hasla sie nie zgadzaja", "dodaj-konto.php");
         } else if (strlen($haslo) < 8) {
             errorBlock("Haslo jest za krotkie", "dodaj-konto.php");
         } else {
+            //sprawdzabnie czy istnieje podany uzytkownik o podanej nazwie
             $istnieje = false;
 
             $query = "SELECT * FROM `konto`";
@@ -56,14 +58,15 @@
                 }
             }
 
+            //dodawanie uzytkownika do bazy
             if (!$istnieje) {
                 $query = "INSERT INTO `konto` (nazwa_uzytkownika, haslo, email) VALUES ('$login', '$haslo', '$email')";
 
                 $connection->query($query);
 
-                $_SESSION["nazwa_uzytkownika"] = $login;
-                header("Location: ../zalogowany/zalogowany-index.php");
-                exit;
+                $_SESSION["nazwa_uzytkownika"] = $login; //wpisywanie danych do sesji
+                header("Location: ../zalogowany/zalogowany-index.php"); //przekierowywanie do innego piku
+            //wyswietlanie bledow jesli cos uzytkowik zrobi zle
             } else {
                 errorBlock("Istnieje juz taki uzytkownik", "dodaj-konto.php");
             }

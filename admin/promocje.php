@@ -18,15 +18,49 @@
         <?php
         include("../config/config.php");
 
+        //warunki z header najlepiej dac na poczatku z powodu mozliwych bledow
+        //kod wykonujacy zmiane danych
+        if (isset($_POST["zmiana"]) && !empty($_POST['nowa_nazwa_promocjii'])) {
+            $nowaNazwaPromocji = htmlspecialchars($_POST['nowa_nazwa_promocjii']);
+            
+            $query = "UPDATE `promocja` SET promocja = '{$nowaNazwaPromocji}' WHERE promocja_id = {$_POST['id']}";
+            $connection->query($query);
+
+            header("Location: promocje.php");
+        } else if (empty($_POST['nowa_nazwa_promocjii']) && isset($_POST['submit'])) {
+            errorBlock("Prosze uzupelnic pole", "promocje.php");
+        }
+
+        //kod na usuwanie danych
+        if (isset($_POST["usun"])) {
+            $query = "DELETE FROM `promocja` WHERE promocja_id = {$_POST['id']}";
+            $connection->query($query);
+
+            header("Location: promocje.php");
+        }
+
+        //kod na dodawanie danych
+        if (isset($_POST['submit']) && !empty($_POST['nazwa_promocji'])) {
+            $nazwaPromocji = htmlspecialchars($_POST['nazwa_promocji']);
+
+            $query = "INSERT INTO `promocja` (promocja) VALUES ('{$nazwaPromocji}')";
+            $connection->query($query);
+
+            header("Location: promocje.php");
+        } else if (empty($_POST['nazwa_promocji']) && isset($_POST['submit'])) {
+            errorBlock("Prosze uzupelnic pole", "promocje.php");
+        }
+
         $query = "SELECT * FROM `promocja`";
         $result = $connection->query($query);
 
+        //wyswietlanie tabeli produktow
         echo "<table> <tr> <th>Promocja</th> <th>Zmien</th> <th>Usun</th> </tr>";
 
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
 
-            if (isset($_POST['id']) && $row['promocja_id'] == $_POST['id'])
+            if (isset($_POST['id']) && $row['promocja_id'] == $_POST['id']) //kod na zmiane danych w tabeli
                 echo "<tr> <td><input name=\"nowa_nazwa_promocjii\" value=\"{$row['promocja']}\"}></td> <td colspan=\"2\"><button type=\"submit\" name=\"zmiana\">Zmien</button></td> </tr>";
             else {
                 echo "<tr> <td>{$row['promocja']}</td>";
@@ -41,6 +75,7 @@
             echo "</form>";
         }
 
+        //kod na dodawanie nowego rekordu
         if (isset($_GET['czy_dodac'])) {
             echo "<form  method=\"post\">";
             echo "<tr>";
@@ -48,35 +83,6 @@
             echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
             echo "</tr>";
             echo "</form>";
-        }
-
-        if (isset($_POST["zmiana"]) && !empty($_POST['nowa_nazwa_promocjii'])) {
-            $nowaNazwaPromocji = htmlspecialchars($_POST['nowa_nazwa_promocjii']);
-            
-            $query = "UPDATE `promocja` SET promocja = '{$nowaNazwaPromocji}' WHERE promocja_id = {$_POST['id']}";
-            $connection->query($query);
-
-            header("Location: promocje.php");
-        } else if (empty($_POST['nowa_nazwa_promocjii']) && isset($_POST['submit'])) {
-            errorBlock("Prosze uzupelnic pole", "promocje.php");
-        }
-
-        if (isset($_POST["usun"])) {
-            $query = "DELETE FROM `promocja` WHERE promocja_id = {$_POST['id']}";
-            $connection->query($query);
-
-            header("Location: promocje.php");
-        }
-
-        if (isset($_POST['submit']) && !empty($_POST['nazwa_promocji'])) {
-            $nazwaPromocji = htmlspecialchars($_POST['nazwa_promocji']);
-
-            $query = "INSERT INTO `promocja` (promocja) VALUES ('{$nazwaPromocji}')";
-            $connection->query($query);
-
-            header("Location: promocje.php");
-        } else if (empty($_POST['nazwa_promocji']) && isset($_POST['submit'])) {
-            errorBlock("Prosze uzupelnic pole", "promocje.php");
         }
         ?>
     </section>

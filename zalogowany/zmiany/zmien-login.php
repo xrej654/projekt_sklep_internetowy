@@ -20,7 +20,7 @@
             </div>
 
             <div class="nazwa-uzytkownika">
-                <?php session_start();
+                <?php session_start(); //zdobycie dostepu do $_SESSION i wysietlenie nazwy a nastepnej wstawce php wpisanie podstawowej wartosci poa jako stara nazwa uzytkownika
                 echo htmlspecialchars($_SESSION['nazwa_uzytkownika']); ?>
             </div>
         </div>
@@ -40,25 +40,23 @@
     <?php
     include("../../config/config.php");
 
+    //sprawdzamy czy uzytkownik wpisal cokolwiek do pola
     if (!empty($_POST['nowy_login'])) {
         $aktualnyLogin = $_SESSION['nazwa_uzytkownika'];
 
         if ($_POST['nowy_login'] !== $aktualnyLogin) {
-            $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika = '{$aktualnyLogin}'";
-            $result = $connection->query($query);
-            $row = $result->fetch_assoc();
-
-            $nowyLogin = htmlspecialchars($_POST['nowy_login']);
+            //podmiana nazwy
+            $nowyLogin = htmlspecialchars($_POST['nowy_login']); //funkcja ktora chroni przed nazwami jako wstawki kodu (szyfruje znaki)
             $query = "UPDATE `konto` SET nazwa_uzytkownika = '{$nowyLogin}' WHERE nazwa_uzytkownika = '{$aktualnyLogin}'";
             $connection->query($query);
 
             $_SESSION["nazwa_uzytkownika"] = $nowyLogin;
 
-            header("Location: ../edytuj-konto.php");
+            header("Location: ../edytuj-konto.php"); //funkcja przenoszaca do innego pliku
         } else {
-            errorBlock("Loginy nie moga byc takie same", "zmien-login.php");
+            errorBlock("Loginy nie moga byc takie same", "zmien-login.php"); //wlasna funkcja wyswietlajaca komunikat z bledem
         }
-    } else if (empty($_POST['nowy_login']) && isset($_POST['submit'])) {
+    } else if (empty($_POST['nowy_login']) && isset($_POST['submit'])) { //wyswietlanie bledu jezeli nazwa uzytkownika jest pusta i uzytkownik podmienial nazwe
         errorBlock("Prosze wypelnic pola", "zmien-login.php");
     }
     ?>

@@ -19,7 +19,7 @@
             </div>
 
             <div class="nazwa-uzytkownika">
-                <?php session_start();
+                <?php session_start(); //zdobycie dostepu do $_SESSION i wyswietlenie nazwy uzytkownika
                 echo htmlspecialchars($_SESSION['nazwa_uzytkownika']); ?>
             </div>
         </div>

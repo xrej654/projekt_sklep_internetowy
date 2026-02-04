@@ -19,11 +19,85 @@
 
         error_reporting(E_ALL & ~E_WARNING);
 
+        //kod z header najelepiej dac na samym poczatku aby nie bylo bledow
+        //dodawanie porduktow
+        if (
+            isset($_POST["submit"]) &&
+            !(empty($_POST['nazwa_produktu']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+        ) {
+            $nazwa = htmlspecialchars($_POST['nazwa_produktu']);
+            $kategoria = htmlspecialchars($_POST['kategoria']);
+            $cena = htmlspecialchars($_POST['cena']);
+            $fotografia = htmlspecialchars($_POST['fotografia']);
+            $producent = htmlspecialchars($_POST['producent']);
+            $opis = htmlspecialchars($_POST['opis']);
+            $ilosc = htmlspecialchars($_POST['ilosc']);
+
+            $query = "INSERT INTO `produkt` 
+            (nazwa, kategoria_id, cena, fotografia, producent_id, opis, ilosc) 
+            VALUES 
+            ('{$nazwa}','{$kategoria}','{$cena}','{$fotografia}'
+            ,'{$producent}','{$opis}','{$ilosc}')";
+
+            $connection->query($query);
+
+            header("Location: produkty.php");
+        } else if (
+            isset($_POST['submit']) && (empty($_POST['nazwa']) || ($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
+            )
+        ) {
+            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
+        }
+
+        //zmiana danych w produktcie
+        if (
+            isset($_POST['zmiana']) &&
+            !(empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
+        ) {
+            $nazwa = htmlspecialchars($_POST['nazwa']);
+            $kategoria = htmlspecialchars($_POST['kategoria']);
+            $cena = htmlspecialchars($_POST['cena']);
+            $fotografia = htmlspecialchars($_POST['fotografia']);
+            $producent = htmlspecialchars($_POST['producent']);
+            $opis = htmlspecialchars($_POST['opis']);
+            $ilosc = htmlspecialchars($_POST['ilosc']);
+
+            $query = "UPDATE `produkt` 
+            SET 
+            nazwa='{$nazwa}',
+            kategoria_id='{$kategoria}',
+            cena={$cena},
+            fotografia='{$fotografia}',
+            producent_id='{$producent}',
+            opis='{$opis}',
+            ilosc={$ilosc}
+            WHERE produkt_id = '{$_POST['id']}'
+            ";
+
+            $connection->query($query);
+
+            header("Location: produkty.php");
+        } else if (
+            isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
+            )
+        ) {
+            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
+        }
+
+        //usuwanie produktu
+        if (isset($_POST["usun"])) {
+            $query = "DELETE FROM `produkt` WHERE produkt_id={$_POST["id"]}";
+            $connection->query($query);
+
+            header("Location: produkty.php");
+        }
+
         $query = "SELECT pc.producent_id AS producent_id, k.kategoria_id AS kategoria_id, pk.produkt_id AS produkt_id, pk.nazwa AS nazwa, k.kategoria AS kategoria, pk.cena AS cena, pk.fotografia AS fotografia, pc.producent AS producent, pk.opis AS opis, pk.ilosc AS ilosc FROM `produkt` pk JOIN `kategoria` k ON pk.kategoria_id = k.kategoria_id JOIN `producent` pc ON pk.producent_id = pc.producent_id";
         $products = $connection->query($query);
 
         echo "<table> <tr> <th>Nazwa</th> <th>Kategoria</th> <th>Cena</th> <th>Fotografia</th> <th>Producent</th> <th>Opis</th> <th>Ilosc</th> <th>Zmien</th> <th>Usun</th> </tr>";
 
+        //wyswietlanie produktow
         while ($row = $products->fetch_assoc()) {
             echo "<form method=\"post\">";
 
@@ -35,6 +109,7 @@
             $opis = htmlspecialchars($row['opis']);
             $ilosc = htmlspecialchars($row['ilosc']);
 
+            //warunek zmieniajacy dany rekord na formularz zmiany danych 
             if (isset($_POST["zmien-formularz"]) && $_POST["id"] == $row["produkt_id"]) {
                 echo "<tr>";
                 echo "<td> <input name=\"nazwa\" value=\"{$nazwa}\"> </td>";
@@ -83,7 +158,7 @@
                 echo "<td> <textarea name=\"opis\">{$opis}</textarea> </td>";
                 echo "<td> <input name=\"ilosc\" value=\"{$ilosc}\"> </td>";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmiana\">Zmien</button> </td> </tr>";
-            } else {
+            } else { //normalne wyswietlanie danych
                 echo "<tr>";
                 echo "<td>" . $nazwa . "</td>";
                 echo "<td>" . $kategoria . "</td>";
@@ -104,6 +179,7 @@
             echo "</form>";
         }
 
+        //formularz na dodawanie nowych produktow
         if (isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] == true) {
             echo "<form method=\"post\">";
             echo "<tr>";
@@ -122,7 +198,7 @@
             echo "</select></td>";
             echo "<td> <input type=\"text\" name=\"cena\"> </td>";
 
-            $linkiDoFotografii = glob("../assets/Product_images/*");
+            $linkiDoFotografii = glob("../assets/Product_images/*"); //funkcja do zdobywania plikow z podanej sciezki i zapis jako tablica
             echo "<td>";
             echo "<select name=\"fotografia\">";
             echo "<option selected></option>";
@@ -150,75 +226,6 @@
             echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
             echo "</form>";
             echo "</tr>";
-        }
-
-        if (
-            isset($_POST["submit"]) &&
-            !(empty($_POST['nazwa_produktu']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
-        ) {
-            $nazwa = htmlspecialchars($_POST['nazwa_produktu']);
-            $kategoria = htmlspecialchars($_POST['kategoria']);
-            $cena = htmlspecialchars($_POST['cena']);
-            $fotografia = htmlspecialchars($_POST['fotografia']);
-            $producent = htmlspecialchars($_POST['producent']);
-            $opis = htmlspecialchars($_POST['opis']);
-            $ilosc = htmlspecialchars($_POST['ilosc']);
-
-            $query = "INSERT INTO `produkt` 
-            (nazwa, kategoria_id, cena, fotografia, producent_id, opis, ilosc) 
-            VALUES 
-            ('{$nazwa}','{$kategoria}','{$cena}','{$fotografia}'
-            ,'{$producent}','{$opis}','{$ilosc}')";
-
-            $connection->query($query);
-
-            header("Location: produkty.php");
-        } else if (
-            isset($_POST['submit']) && (empty($_POST['nazwa']) || ($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
-            )
-        ) {
-            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
-        }
-
-        if (
-            isset($_POST['zmiana']) &&
-            !(empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc']))
-        ) {
-            $nazwa = htmlspecialchars($_POST['nazwa']);
-            $kategoria = htmlspecialchars($_POST['kategoria']);
-            $cena = htmlspecialchars($_POST['cena']);
-            $fotografia = htmlspecialchars($_POST['fotografia']);
-            $producent = htmlspecialchars($_POST['producent']);
-            $opis = htmlspecialchars($_POST['opis']);
-            $ilosc = htmlspecialchars($_POST['ilosc']);
-
-            $query = "UPDATE `produkt` 
-            SET 
-            nazwa='{$nazwa}',
-            kategoria_id='{$kategoria}',
-            cena={$cena},
-            fotografia='{$fotografia}',
-            producent_id='{$producent}',
-            opis='{$opis}',
-            ilosc={$ilosc}
-            WHERE produkt_id = '{$_POST['id']}'
-            ";
-
-            $connection->query($query);
-
-            header("Location: produkty.php");
-        } else if (
-            isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
-            )
-        ) {
-            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
-        }
-
-        if (isset($_POST["usun"])) {
-            $query = "DELETE FROM `produkt` WHERE produkt_id={$_POST["id"]}";
-            $connection->query($query);
-
-            header("Location: produkty.php");
         }
 
         echo "</table>";

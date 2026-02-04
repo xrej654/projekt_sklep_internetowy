@@ -25,6 +25,8 @@
         echo "<form method=\"post\">";
         echo "<table>";
         echo "<tr> <th>Produkt</th> <th>Czy usunac promocje</th> <tr>";
+
+        //wyswietlanie wszytkich produktow
         while ($row = $result->fetch_assoc()) {
             $nazwa = htmlspecialchars($row['nazwa']);
             echo "<tr> <td style=\"padding:10px;\">{$nazwa}</td> <td><input type=\"checkbox\" name=\"ids[]\" value=\"{$row['produkt_id']}\"></td> </tr>";
@@ -36,6 +38,7 @@
 
         echo "<select style=\"margin-left:4.5vw;\" name=\"promocja\">";
 
+        //wyswietlanie wszytkich promocji
         while ($row = $result->fetch_assoc()) {
             $nazwa = htmlspecialchars($row['promocja']);
             echo "<option value=\"{$row['promocja_id']}\">{$nazwa}</option>";
@@ -46,6 +49,7 @@
         echo "<button style=\"margin-left:0.5vw;\" type=\"submit\" name=\"submit\">Usun promocje</button>";
         echo "</form>";
 
+        //usuwanie promocji do danych produktow
         if (isset($_POST['submit'])) {
             foreach ($_POST['ids'] as $id) {
                 $query = "SELECT * FROM `promocja_produkt` WHERE promocja_id = {$_POST['promocja']} AND produkt_id = {$id}";

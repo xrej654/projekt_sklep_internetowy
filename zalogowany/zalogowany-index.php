@@ -35,8 +35,10 @@
         <?php
         include("../config/config.php");
 
+        //start sesji aby miec dostep do tablicy $_SESSION i danych w niej zawartych
         session_start();
 
+        //pobieranie nazwy uzytkownika i sprawdzanie czy dane konto jest kontem admina jesli tak to wyswietlaq sie specjalny przycisk
         $nazwa_uzytkownika = $_SESSION['nazwa_uzytkownika'];
 
         $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='{$nazwa_uzytkownika}'";

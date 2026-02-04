@@ -25,11 +25,12 @@
     <?php
     include("../config/config.php");
 
+    //zdobycie dostepu do sesji
     session_start();
 
+    //warunek sprawdzajacy czy uzytkonik wchodzil po logowaniu i czy jest adminem (pozybcie sie mozliwosci wpisania linku i zmiany bazy)
     if (!isset($_SESSION['czy_admin']) || $_SESSION['czy_admin'] !== true) {
         header("Location: ../system-logowania/login.php");
-        exit();
     }
 
     ?>
