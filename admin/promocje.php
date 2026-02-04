@@ -28,7 +28,7 @@
 
             header("Location: promocje.php");
         } else if (empty($_POST['nowa_nazwa_promocjii']) && isset($_POST['submit'])) {
-            errorBlock("Prosze uzupelnic pole", "promocje.php");
+            blokBledu("Prosze uzupelnic pole", "promocje.php");
         }
 
         //kod na usuwanie danych
@@ -48,7 +48,7 @@
 
             header("Location: promocje.php");
         } else if (empty($_POST['nazwa_promocji']) && isset($_POST['submit'])) {
-            errorBlock("Prosze uzupelnic pole", "promocje.php");
+            blokBledu("Prosze uzupelnic pole", "promocje.php");
         }
 
         $query = "SELECT * FROM `promocja`";

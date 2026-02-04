@@ -28,7 +28,7 @@
 
                 header("Location: galeria-zdjec.php");
             } else {
-                errorBlock("Prosze uzupelnic pola", "galeria-zdjec.php");
+                blokBledu("Prosze uzupelnic pola", "galeria-zdjec.php");
             }
         }
 

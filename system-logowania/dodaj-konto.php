@@ -41,9 +41,9 @@
 
         //sprawdzamy czy uzytkownik powtorzyl dobrze haslo i czy ma dobra dlugosc
         if ($haslo != $powtorz_haslo) {
-            errorBlock("Hasla sie nie zgadzaja", "dodaj-konto.php");
+            blokBledu("Hasla sie nie zgadzaja", "dodaj-konto.php");
         } else if (strlen($haslo) < 8) {
-            errorBlock("Haslo jest za krotkie", "dodaj-konto.php");
+            blokBledu("Haslo jest za krotkie", "dodaj-konto.php");
         } else {
             //sprawdzabnie czy istnieje podany uzytkownik o podanej nazwie
             $istnieje = false;
@@ -68,11 +68,11 @@
                 header("Location: ../zalogowany/zalogowany-index.php"); //przekierowywanie do innego piku
             //wyswietlanie bledow jesli cos uzytkowik zrobi zle
             } else {
-                errorBlock("Istnieje juz taki uzytkownik", "dodaj-konto.php");
+                blokBledu("Istnieje juz taki uzytkownik", "dodaj-konto.php");
             }
         }
     } else if ((empty($_POST['login']) || empty($_POST['email']) || empty($_POST['haslo']) || empty($_POST['powtorz_haslo'])) && isset($_POST['submit'])) {
-        errorBlock("Prosze wypelnic wszytkie pola", "dodaj-konto.php");
+        blokBledu("Prosze wypelnic wszytkie pola", "dodaj-konto.php");
     }
 
     $connection->close();

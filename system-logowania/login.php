@@ -68,13 +68,13 @@
     
                 //w nastepnych elsa'ach to wyswietlanie bledow jelsi cos pojdzie nie tak
             } else {
-                errorBlock("Haslo jest nie poprawne", "login.php");
+                blokBledu("Haslo jest nie poprawne", "login.php");
             }
         } else {
-            errorBlock("Uzytkownik nie istnieje - Kliknij 'Nie mam konta'", "login.php");
+            blokBledu("Uzytkownik nie istnieje - Kliknij 'Nie mam konta'", "login.php");
         }
     } else if ((empty($_POST['login']) || empty($_POST['haslo'])) && isset($_POST['submit'])) {
-        errorBlock("Pola musza byc wypelnione", "login.php");
+        blokBledu("Pola musza byc wypelnione", "login.php");
     }
 
     $connection->close();

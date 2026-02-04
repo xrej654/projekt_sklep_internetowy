@@ -1,7 +1,8 @@
 <?php
-function errorBlock($wiadomosc, $link)
+//funkcja wyswietlajaca wiadomosc bledu
+function blokBledu($wiadomosc, $link)
 {
-    echo <<<ERRORBLOCK
+    echo <<<BLOKBLEDU
                         <form action="{$link}">
                             <div class="error-block">
                                 <button type="submit">
@@ -12,9 +13,10 @@ function errorBlock($wiadomosc, $link)
                                 </p>
                             </div>
                         </form>
-            ERRORBLOCK;
+            BLOKBLEDU;
 }
 
+//zapis danych do polaczenie z baza i polaczenie z baza
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -22,6 +24,7 @@ $database = "sklep internetowy";
 
 $connection = new mysqli($host, $user, $password, $database);
 
+//sprawdzenie czy polaczenie sie udalo
 if ($connection->connect_error) {
     die("Błąd połączenia: " . $connection->connect_error);
 }

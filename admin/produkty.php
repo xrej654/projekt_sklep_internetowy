@@ -46,7 +46,7 @@
             isset($_POST['submit']) && (empty($_POST['nazwa']) || ($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
             )
         ) {
-            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
+            blokBledu("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
         //zmiana danych w produktcie
@@ -81,7 +81,7 @@
             isset($_POST['submit']) && (empty($_POST['nazwa']) || empty($_POST['kategoria']) || empty($_POST['cena']) || empty($_POST['fotografia']) || empty($_POST['producent']) || empty($_POST['opis']) || empty($_POST['ilosc'])
             )
         ) {
-            errorBlock("Prosze uzupelnic wszytkie pola", "produkty.php");
+            blokBledu("Prosze uzupelnic wszytkie pola", "produkty.php");
         }
 
         //usuwanie produktu
