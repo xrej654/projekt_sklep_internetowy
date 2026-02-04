@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2026 at 08:15 PM
+-- Generation Time: Feb 04, 2026 at 08:12 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -60,20 +60,18 @@ CREATE TABLE `dokument` (
 
 CREATE TABLE `kategoria` (
   `kategoria_id` int(10) UNSIGNED NOT NULL,
-  `kategoria` varchar(30) NOT NULL
+  `kategoria` varchar(30) NOT NULL,
+  `ikona` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Dumping data for table `kategoria`
 --
 
-INSERT INTO `kategoria` (`kategoria_id`, `kategoria`) VALUES
-(1, 'Elektorinka'),
-(2, 'Ksiazki'),
-(7, 'Gospodarstwo domowe'),
-(9, 'Odziez'),
-(10, 'Uslugi'),
-(11, 'Budownictwo');
+INSERT INTO `kategoria` (`kategoria_id`, `kategoria`, `ikona`) VALUES
+(1, 'Elektorinka', '../assets/Icons/Elektronika.jpg'),
+(2, 'Ksiazki', '../assets/Icons/Ksiazka.jpg'),
+(11, 'Budownictwo', '../assets/Icons/Budownictwo.jpg');
 
 -- --------------------------------------------------------
 
@@ -186,7 +184,17 @@ INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografi
 (23, 'Laptop Acer Nitro 5', 1, 5000, '../assets/Product_images/acernitro5-01.jpg', 2, 'Dla graczy', 100),
 (28, 'Telewizor Sharp QLED', 1, 4000, '../assets/Product_images/sharpQLED-01.jpg', 4, 'Telewizor z technologia QLED', 75),
 (29, 'Drukarka Brother', 1, 500, '../assets/Product_images/drukarkabrother-01.jpg', 1, 'Tania i nie zawodna drukarka', 255),
-(30, 'Iphone', 1, 7000, '../assets/Product_images/iphone15promax-01.jpg', 3, 'Telefon firmy motorola', 100);
+(30, 'Iphone', 1, 7000, '../assets/Product_images/iphone15promax-01.jpg', 3, 'Telefon firmy motorola', 100),
+(32, 'Hobbit', 2, 50, '../assets/Product_images/hobbit-01.jpg', 1, 'Ksiazka J.R.R. Tolkien', 255),
+(37, 'Pan Tadeusz', 2, 50, '../assets/Product_images/PanTadeusz-01.jpg', 4, 'Epopeja polska Mickiewicza', 255),
+(39, 'Lalka', 2, 50, '../assets/Product_images/lalka-01.jpg', 2, 'Ksiazka Boleslawa Prusa', 255),
+(41, 'Zbrodnia i kara', 2, 50, '../assets/Product_images/zbrodniaIKara-01.jpg', 3, 'kriminal Fiodora Dostojewskiego', 255),
+(42, 'Wesele', 2, 50, '../assets/Product_images/wesele-01.jpg', 2, 'Jedna z lektur w polskich szkolach', 255),
+(43, 'Duck Tape', 11, 20, '../assets/Product_images/DuckTape-01.jpg', 2, 'Sprawdzona amerykanska tasma', 100),
+(44, 'Lopata', 11, 250, '../assets/Product_images/Lopata-01.jpg', 2, 'Lopata budowlana', 50),
+(45, 'Cegla', 11, 5, '../assets/Product_images/cegla-01.jpg', 2, 'Cegla z afryki', 255),
+(46, 'Gwozdzie', 11, 2, '../assets/Product_images/gwozdzie-01.jpg', 1, 'Gwozdzie 10szt', 255),
+(47, 'Cement', 11, 60, '../assets/Product_images/cement-01.jpg', 3, 'Cement 50kg', 100);
 
 -- --------------------------------------------------------
 
@@ -300,7 +308,24 @@ INSERT INTO `zdjecia` (`zdjecia_id`, `link`, `produkt_id`) VALUES
 (28, '../assets/Product_images/iphone15promax-01.jpg', 30),
 (29, '../assets/Product_images/iphone15promax-02.jpg', 30),
 (31, '../assets/Product_images/iphone15promax-03.jpg', 30),
-(32, '../assets/Product_images/iphone15promax-04.jpg', 30);
+(32, '../assets/Product_images/iphone15promax-04.jpg', 30),
+(34, '../assets/Product_images/hobbit-01.jpg', 32),
+(35, '../assets/Product_images/PanTadeusz-01.jpg', 37),
+(36, '../assets/Product_images/lalka-01.jpg', 39),
+(37, '../assets/Product_images/zbrodniaIKara-01.jpg', 41),
+(38, '../assets/Product_images/wesele-01.jpg', 42),
+(39, '../assets/Product_images/DuckTape-01.jpg', 43),
+(40, '../assets/Product_images/DuckTape-02.jpg', 43),
+(41, '../assets/Product_images/DuckTape-03.jpg', 43),
+(42, '../assets/Product_images/Lopata-01.jpg', 44),
+(43, '../assets/Product_images/Lopata-02.jpg', 44),
+(44, '../assets/Product_images/Lopata-03.jpg', 44),
+(45, '../assets/Product_images/cegla-01.jpg', 45),
+(46, '../assets/Product_images/gwozdzie-01.jpg', 46),
+(47, '../assets/Product_images/gwozdzie-02.jpg', 46),
+(48, '../assets/Product_images/gwozdzie-03.jpg', 46),
+(49, '../assets/Product_images/cement-01.jpg', 47),
+(50, '../assets/Product_images/cement-02.jpg', 47);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -433,7 +458,7 @@ ALTER TABLE `dokument`
 -- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
-  MODIFY `kategoria_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `kategoria_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `klient`
@@ -469,7 +494,7 @@ ALTER TABLE `producent`
 -- AUTO_INCREMENT for table `produkt`
 --
 ALTER TABLE `produkt`
-  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `produkt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `promocja`
@@ -505,7 +530,7 @@ ALTER TABLE `zamowienie_produkt`
 -- AUTO_INCREMENT for table `zdjecia`
 --
 ALTER TABLE `zdjecia`
-  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `zdjecia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables

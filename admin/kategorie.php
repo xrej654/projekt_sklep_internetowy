@@ -22,27 +22,29 @@
         //kod z header najlepej napisac na poczatku aby nie bylo bledu
         //kod obowiazuje kolejno za dodawanie, zmiana i usuwanie rekordow do bazy
         if (isset($_POST["submit"])) {
-            if (isset($_POST['submit']) && empty($_POST["nazwa_kategorii"])) {
+            if (empty($_POST["nazwa_kategorii"]) && empty($_POST['ikona'])) {
                 errorBlock("Prosze wypelnic pole", "kategorie.php");
             } else {
                 $nazwaKategorii = htmlspecialchars($_POST['nazwa_kategorii']);
+                $ikona = htmlspecialchars($_POST['ikona']);
 
-                $query = "INSERT INTO `kategoria` (kategoria) VALUES ('{$nazwaKategorii}')";
+                $query = "INSERT INTO `kategoria` (kategoria, ikona) VALUES ('{$nazwaKategorii}', '{$ikona}')";
                 $connection->query($query);
 
                 header("Location: kategorie.php");
             }
         }
 
-        if (isset($_POST["zmien"]) && !empty($_POST['kategoria']) && !empty($_POST["nowa_nazwa_kategorii"])) {
+        if (isset($_POST["zmien"]) && !empty($_POST['kategoria']) && !empty($_POST["nowa_nazwa_kategorii"]) && !empty($_POST['nowa_ikona'])) {
             $kategoria = htmlspecialchars($_POST['kategoria']);
             $nowaNazwaKategorii = htmlspecialchars($_POST['nowa_nazwa_kategorii']);
+            $nowa_ikona = htmlspecialchars($_POST['nowa_ikona']);
 
-            $query = "UPDATE `kategoria` SET kategoria='{$nowaNazwaKategorii}' WHERE kategoria = '{$kategoria}'";
+            $query = "UPDATE `kategoria` SET kategoria='{$nowaNazwaKategorii}', ikona='{$nowa_ikona}' WHERE kategoria = '{$kategoria}'";
             $connection->query($query);
 
             header("Location: kategorie.php");
-        } else if (isset($_POST['submit']) && empty($_POST["nowa_nazwa_kategorii"])) {
+        } else if (isset($_POST['submit']) && empty($_POST["nowa_nazwa_kategorii"]) && empty($_POST['nowa_ikona'])) {
             errorBlock("Prosze uzupelnic pole", "kategorie.php");
         }
 
@@ -58,7 +60,7 @@
         $query = "SELECT DISTINCT *  FROM `kategoria`";
         $result = $connection->query($query);
 
-        echo "<table> <tr> <th>Kategoria</th> <th>Zmien</th> <th>Usun</th> </tr>";
+        echo "<table> <tr> <th>Kategoria</th> <th>Link do ikony</th> <th>Zmien</th> <th>Usun</th> </tr>";
 
         //wyswietlnaie produktow
         while ($row = $result->fetch_assoc()) {
@@ -66,13 +68,25 @@
             echo "<tr>";
 
             $kategoria = htmlspecialchars($row['kategoria']);
+            $ikonaBaza = htmlspecialchars($row['ikona']);
 
             if ($kategoria == $_POST['kategoria'] && isset($_POST['zmien-formularz'])) { //formualrz na zmiane rekodrow w bazie
                 echo "<td> <input name=\"nowa_nazwa_kategorii\" value=\"{$kategoria}\"> </td>";
+                echo "<td> <select name=\"nowa_ikona\">";
+                echo "<option selected>{$ikonaBaza}</option>";
+
+                $linkiDoIkon = glob("../assets/Icons/*");
+
+                foreach ($linkiDoIkon as $ikona) {
+                    echo "<option>{$ikona}</opiton>";
+                }
+
+                echo "</select> </td>";
                 echo "<input type=\"hidden\" name=\"kategoria\" value=\"{$kategoria}\">";
                 echo "<td colspan=\"2\"> <button type=\"submit\" name=\"zmien\">Zmien</button> </td>";
             } else {
                 echo "<td>" . $kategoria . "</td>";
+                echo "<td>" . $ikonaBaza . "</td>";
 
                 if (!isset($_GET["czy_dodac"]) && $_GET["czy_dodac"] != true) {
                     echo "<td> <button type=\"submit\" name=\"zmien-formularz\">Zmien</button> </td>";
@@ -91,6 +105,18 @@
             echo "<form method=\"post\"";
             echo "<tr>";
             echo "<td> <input name=\"nazwa_kategorii\"> </td>";
+
+            echo "<td> <select name=\"ikona\">";
+            echo "<option selected></option>";
+
+            $linkiDoIkon = glob("../assets/Icons/*");
+
+            foreach ($linkiDoIkon as $ikona) {
+                echo "<option>{$ikona}</opiton>";
+            }
+
+            echo "</select> </td>";
+
             echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
             echo "</tr>";
             echo "</form>";
