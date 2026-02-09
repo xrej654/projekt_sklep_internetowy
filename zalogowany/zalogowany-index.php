@@ -57,6 +57,21 @@
         ?>
     </section>
 
+    <?php
+    // kod wyswietlajacy kategorie i produkty
+    $tablicaKategorii = $connection->query("SELECT * FROM `kategoria`");
+
+    sekcjaKategorii($tablicaKategorii, "zalogowany-index", false);
+
+    if (empty($_GET['kategoria'])) {
+        $produkty = $connection->query("SELECT * FROM `produkt`");
+        produkt($produkty,"zalogowany-index.php",false);
+    } else {
+        $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE kategoria = '{$_GET['kategoria']}'");
+        produkt($produkty,"zalogowany-index.php",false);
+    }
+    ?>
+
 </body>
 
 </html>

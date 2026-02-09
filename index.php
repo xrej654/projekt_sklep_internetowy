@@ -34,8 +34,23 @@
     </section>
 
     <?php
-        // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
-        session_destroy();
+    include("config/config.php");
+    // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
+    if(session_status() != 2) session_destroy();
+
+    // kod wyswietlajacy kategorie i produkty
+    
+    $tablicaKategorii = $connection->query("SELECT * FROM `kategoria`");
+
+    sekcjaKategorii($tablicaKategorii, "index", true);
+
+    if (empty($_GET['kategoria'])) {
+        $produkty = $connection->query("SELECT * FROM `produkt`");
+        produkt($produkty,"index.php",true);
+    } else {
+        $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE kategoria = '{$_GET['kategoria']}'");
+        produkt($produkty,"index.php",true);
+    }
     ?>
 </body>
 
