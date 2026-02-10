@@ -3,58 +3,102 @@ a {
     margin-left: 49%;
 }
 
-.lewy-panel, .prawy-panel {
-    float:left;
-    width:47%;
+.lewy-panel {
+    width:25%;
+}
+
+.prawy-panel {
+    width: 69%;
+}
+
+.lewy-panel,
+.prawy-panel {
+    float: left;
     background-color: #465775;
-    height:55vh;
+    height: 55vh;
     padding: 10px;
     border-radius: 10px;
 }
 
-.lewy-panel , .prawy-panel {
+.lewy-panel,
+.prawy-panel {
     margin-left: 1%;
 }
 
 .zdjecie img {
-    width:400px;
+    width: 400px;
     height: 400px;
 }
 
 .galeria img {
     height: 75px;
     width: 50px;
-    margin:2.5px;
+    margin: 2.5px;
 }
 
 .galeria {
-    width:60%;
+    width: 60%;
 }
 
 .galeria button {
     background-color: #465775;
     padding: 0px 0px 0px 0px;
     cursor: pointer;
-    border:0px;
+    border: 0px;
 }
 
 .prawy-panel .nazwa {
-    font-size:75px;
+    font-size: 75px;
 }
 
 .prawy-panel .opis {
     width: 90%;
     margin-left: 5%;
-    height:200px;
+    height: 200px;
 }
 
 .prawy-panel .cena {
-    color:red;
+    color: red;
     font-size: 50px;
     text-align: center;
-    margin-right:20%;
+    margin-right: 60%;
 }
 
 .prawy-panel .dodatki button {
-    margin-left:10%;
+    margin-left: 10%;
+}
+
+.opinie {
+    background-color: #465775;
+    width: 95%;
+    margin-left: 2.5%;
+    position: relative;
+    top: 60vh;
+    border-radius: 10px;
+}
+
+.opinie img {
+    width: 90px;
+    height: 90px;
+}
+
+.panel-lewy, .panel-prawy {
+    height:15vh;
+    float:left;
+    position:relative;
+    bottom:55vh;
+}
+
+.panel-lewy {
+    width:10%;
+    text-align: center;
+}
+
+.panel-prawy {
+    width: 90%;
+}
+
+textarea {
+    width: 80%;
+    margin-top:5px;
 }
