@@ -17,10 +17,12 @@
 
     session_start();
 
+    //pobieranie danych
     $nazwa = htmlspecialchars($_GET['nazwa']);
     $produkt = $connection->query("SELECT * FROM `produkt` JOIN `producent` USING(producent_id) JOIN `kategoria` USING(kategoria_id) WHERE nazwa = '{$nazwa}'")->fetch_assoc();
     $galeria = $connection->query("SELECT link FROM `zdjecia` WHERE produkt_id={$produkt['produkt_id']}");
 
+    //obslga zdarzen do oceny produktow
     if (isset($_POST['submit'])) {
         $ocena = $_POST['ocena'];
         $komentarz = htmlspecialchars($_POST['komentarz']);
@@ -47,6 +49,7 @@
         header("Location: produkt.php?nazwa={$nazwa}&link={$_GET['link']}");
     }
 
+    //pobieranie oraz wpisywanie danych klienta
     if (isset($_POST['dane'])) {
         if (isset($_POST['imie']) && isset($_POST['nazwisko']) && isset($_POST['adres']) && isset($_POST['nrTelefonu']) && isset($_POST['email']) && empty($_SESSION['klient_id'])) {
             $imie = htmlspecialchars($_POST['imie']);
@@ -66,6 +69,7 @@
 
     echo "<a href=\"{$_GET['link']}\">Anuluj</a> <br><br>";
 
+    //wyswietlanie formularza do podania danych klienta, dodanie produktu do koszyka oraz wyswietlanie produktu
     if ($_POST['czyKoszyk'] && empty($_SESSION['klient_id'])) {
         echo <<<DANEDOKOSZYKA
             <section class="koszyk">
@@ -143,12 +147,14 @@
                 <button type="submit" name="czyDodacOpinie" value="true" style="margin-right:10vw;">Dodaj opinie</button>
         PRODUKTCZ2;
 
+        //sprawdzanie czy produkt jest dostepny
         if ($produkt['ilosc'] != 0)
             echo "<button type=\"submit\" name=\"czyKoszyk\" value=\"true\">Dodaj do koszyka</button>";
         else
             echo "Produkt nie dostepny";
         echo "</form> </div> </div> </section>";
 
+        //kod do dodania i wyswietlania opinii
         if (isset($_POST['czyOpinie']) || isset($_POST['czyDodacOpinie']) || isset($_POST['edytuj'])) {
             $opinie = $connection->query("SELECT * FROM `ocena` JOIN `konto` USING(konto_id) JOIN `produkt` USING(produkt_id) WHERE produkt.nazwa = '{$nazwa}'");
 

@@ -15,8 +15,9 @@
 
     session_start();
 
-    //error_reporting(E_ALL & ~E_WARNING);
+    error_reporting(E_ALL & ~E_WARNING);
     
+    //obsluga przyciskow w koszyku
     if (isset($_POST['usun'])) {
         $connection->query("DELETE FROM `koszyk` WHERE koszyk_id = {$_POST['id']}");
         header("Location: koszyk.php");
@@ -50,6 +51,7 @@
     else
         echo "<a href=\"index.php\">Anuluj</a>";
 
+    //wyswietlanie kazdego produktu w koszyku
     $produktyZKoszyka = $connection->query("SELECT koszyk_id, fotografia, nazwa, cena, koszyk.ilosc FROM `koszyk` JOIN `produkt` USING(produkt_id) WHERE klient_id = {$_SESSION['klient_id']}");
 
     echo "<section class=\"koszyk\">";
@@ -63,22 +65,22 @@
                 <div class="produkt">
                     <form method="post">
                         <div class="zdjecie">
-                        <img src="{$fotografia}" alt="zdjecie produktu">
+                            <img src="{$fotografia}" alt="zdjecie produktu">
                         </div>
                         <div class="dane">
-                        {$produktZKoszyka['nazwa']} <br> <br>
-                        {$produktZKoszyka['cena']} 
+                            {$produktZKoszyka['nazwa']} <br> <br>
+                            {$produktZKoszyka['cena']} 
                         </div>
                         <div class="ilosc">
-                        <button type="submit" name="+" class="zmiana-ilosci">+</button> <br>
-                        {$produktZKoszyka['ilosc']} <br>
-                        <button type="submit" name="-" class="zmiana-ilosci">-</button>
+                            <button type="submit" name="+" class="zmiana-ilosci">+</button> <br>
+                            {$produktZKoszyka['ilosc']} <br>
+                            <button type="submit" name="-" class="zmiana-ilosci">-</button>
                         </div>
                         <div class="usun">
                             <button type="submit" name="usun">Usun</button>
                         </div>
-                        <input type="hidden" name="id" value="{$produktZKoszyka['koszyk_id']}">
-                        <input type="hidden" name="ilosc" value="{$produktZKoszyka['ilosc']}">
+                            <input type="hidden" name="id" value="{$produktZKoszyka['koszyk_id']}">
+                            <input type="hidden" name="ilosc" value="{$produktZKoszyka['ilosc']}">
                     </form>
                 </div>
                 <br>

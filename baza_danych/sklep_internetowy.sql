@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2026 at 08:12 PM
+-- Generation Time: Feb 13, 2026 at 07:10 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -88,6 +88,13 @@ CREATE TABLE `klient` (
   `email` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Dumping data for table `klient`
+--
+
+INSERT INTO `klient` (`klient_id`, `imie`, `nazwisko`, `adres`, `nr_telefonu`, `email`) VALUES
+(15, 'Jonatan', 'Knapik', 'Sloneczna 5, 50-208', '000000000', 'jakis@email.com');
+
 -- --------------------------------------------------------
 
 --
@@ -123,6 +130,15 @@ CREATE TABLE `koszyk` (
   `ilosc` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Dumping data for table `koszyk`
+--
+
+INSERT INTO `koszyk` (`koszyk_id`, `klient_id`, `produkt_id`, `ilosc`) VALUES
+(2, 15, 1, 1),
+(5, 15, 32, 6),
+(6, 15, 30, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -133,9 +149,17 @@ CREATE TABLE `ocena` (
   `ocena_id` int(11) NOT NULL,
   `ocena` enum('0.0','0.5','1.0','1.5','2.0','2.5','3.0','3.5','4.0','4.5','5.0') NOT NULL,
   `komentarz` varchar(150) NOT NULL,
-  `klient_id` int(10) UNSIGNED NOT NULL,
+  `konto_id` mediumint(8) UNSIGNED NOT NULL,
   `produkt_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `ocena`
+--
+
+INSERT INTO `ocena` (`ocena_id`, `ocena`, `komentarz`, `konto_id`, `produkt_id`) VALUES
+(1, '2.0', 'Bardzo super telefon posiadam go od rokou i nie bylo zadnych problemow.Bardzo super telefon posiadam go od rokou i nie bylo zadnych problemow.Bardzo s', 2, 1),
+(4, '4.5', 'abcd', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -204,18 +228,19 @@ INSERT INTO `produkt` (`produkt_id`, `nazwa`, `kategoria_id`, `cena`, `fotografi
 
 CREATE TABLE `promocja` (
   `promocja_id` tinyint(3) UNSIGNED NOT NULL,
-  `promocja` varchar(50) NOT NULL
+  `promocja` varchar(50) NOT NULL,
+  `obnizka_ceny` int(11) NOT NULL CHECK (`obnizka_ceny` between 1 and 100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Dumping data for table `promocja`
 --
 
-INSERT INTO `promocja` (`promocja_id`, `promocja`) VALUES
-(1, 'Black Friday'),
-(5, 'Winter sales'),
-(6, 'Summer 50% off'),
-(8, 'Aniversary sales');
+INSERT INTO `promocja` (`promocja_id`, `promocja`, `obnizka_ceny`) VALUES
+(1, 'Black Friday', 1),
+(5, 'Winter sales', 0),
+(6, 'Summer 50% off', 0),
+(8, 'Aniversary sales', 0);
 
 -- --------------------------------------------------------
 
@@ -227,21 +252,6 @@ CREATE TABLE `promocja_produkt` (
   `promocja_produkt_id` int(11) UNSIGNED NOT NULL,
   `promocja_id` tinyint(3) UNSIGNED NOT NULL,
   `produkt_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `token_reset`
---
-
-CREATE TABLE `token_reset` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
-  `konto_id` mediumint(8) UNSIGNED NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `wygasa` datetime NOT NULL,
-  `wykorzystany` tinyint(1) NOT NULL,
-  `utworzono` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
@@ -378,7 +388,7 @@ ALTER TABLE `koszyk`
 --
 ALTER TABLE `ocena`
   ADD PRIMARY KEY (`ocena_id`),
-  ADD KEY `klinet_id` (`klient_id`,`produkt_id`),
+  ADD KEY `klinet_id` (`konto_id`,`produkt_id`),
   ADD KEY `produkt_id` (`produkt_id`);
 
 --
@@ -408,13 +418,6 @@ ALTER TABLE `promocja_produkt`
   ADD PRIMARY KEY (`promocja_produkt_id`),
   ADD KEY `promocja_id` (`promocja_id`,`produkt_id`),
   ADD KEY `produkt_id` (`produkt_id`);
-
---
--- Indeksy dla tabeli `token_reset`
---
-ALTER TABLE `token_reset`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `konto_id` (`konto_id`);
 
 --
 -- Indeksy dla tabeli `zamowienie`
@@ -464,7 +467,7 @@ ALTER TABLE `kategoria`
 -- AUTO_INCREMENT for table `klient`
 --
 ALTER TABLE `klient`
-  MODIFY `klient_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `klient_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `konto`
@@ -476,13 +479,13 @@ ALTER TABLE `konto`
 -- AUTO_INCREMENT for table `koszyk`
 --
 ALTER TABLE `koszyk`
-  MODIFY `koszyk_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `koszyk_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ocena`
 --
 ALTER TABLE `ocena`
-  MODIFY `ocena_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ocena_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `producent`
@@ -507,12 +510,6 @@ ALTER TABLE `promocja`
 --
 ALTER TABLE `promocja_produkt`
   MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `token_reset`
---
-ALTER TABLE `token_reset`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `zamowienie`
@@ -561,7 +558,7 @@ ALTER TABLE `koszyk`
 --
 ALTER TABLE `ocena`
   ADD CONSTRAINT `ocena_ibfk_1` FOREIGN KEY (`produkt_id`) REFERENCES `produkt` (`produkt_id`),
-  ADD CONSTRAINT `ocena_ibfk_2` FOREIGN KEY (`klient_id`) REFERENCES `klient` (`klient_id`);
+  ADD CONSTRAINT `ocena_ibfk_2` FOREIGN KEY (`konto_id`) REFERENCES `konto` (`konto_id`);
 
 --
 -- Constraints for table `produkt`
@@ -576,12 +573,6 @@ ALTER TABLE `produkt`
 ALTER TABLE `promocja_produkt`
   ADD CONSTRAINT `promocja_produkt_ibfk_1` FOREIGN KEY (`produkt_id`) REFERENCES `produkt` (`produkt_id`),
   ADD CONSTRAINT `promocja_produkt_ibfk_2` FOREIGN KEY (`promocja_id`) REFERENCES `promocja` (`promocja_id`);
-
---
--- Constraints for table `token_reset`
---
-ALTER TABLE `token_reset`
-  ADD CONSTRAINT `token_reset_ibfk_1` FOREIGN KEY (`konto_id`) REFERENCES `konto` (`konto_id`);
 
 --
 -- Constraints for table `zamowienie`
