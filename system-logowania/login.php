@@ -55,10 +55,18 @@
             $result = $connection->query($query);
             $wiersz = $result->fetch_assoc();
             $haslo_baza_danych = $wiersz['haslo'];
+            $email = $wiersz['email'];
 
             //sprawdzenie zgosnosci z haslem i wpisywanie danych do sesji
             if ($haslo === $haslo_baza_danych) {
                 $_SESSION['nazwa_uzytkownika'] = $login;
+
+                //kod szukajacy czy sa juz dane klienta i przypisanie do sesji
+
+                $klient = $connection->query("SELECT klient_id FROM `klient` WHERE eamil = '{$email}'");
+
+                if($klient->num_rows != 0) $_SESSION['klient_id'] = $klient->fetch_assoc()['klient_id'];
+
                 $query = "SELECT admin FROM `konto` WHERE nazwa_uzytkownika='$login'";
                 $wynik = $connection->query($query);
                 $wiersz = $wynik->fetch_assoc();

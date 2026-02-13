@@ -29,7 +29,7 @@
                     </button>
                 </a>
 
-                <a href="koszyk.php">
+                <a href="../koszyk.php">
                     <button type="button" class="koszyk">
                         <img src="../assets/koszyk.png" alt="">
                     </button>

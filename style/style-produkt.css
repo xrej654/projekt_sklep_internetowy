@@ -4,7 +4,7 @@ a {
 }
 
 .lewy-panel {
-    width:25%;
+    width: 25%;
 }
 
 .prawy-panel {
@@ -64,6 +64,12 @@ a {
     margin-right: 60%;
 }
 
+.prawy-panel .ilosc {
+    font-size: 30px;
+    text-align: center;
+    margin-left: 60%;
+}
+
 .prawy-panel .dodatki button {
     margin-left: 10%;
 }
@@ -82,15 +88,16 @@ a {
     height: 90px;
 }
 
-.panel-lewy, .panel-prawy {
-    height:15vh;
-    float:left;
-    position:relative;
-    bottom:55vh;
+.panel-lewy,
+.panel-prawy {
+    height: 15vh;
+    float: left;
+    position: relative;
+    bottom: 55vh;
 }
 
 .panel-lewy {
-    width:10%;
+    width: 10%;
     text-align: center;
 }
 
@@ -100,5 +107,17 @@ a {
 
 textarea {
     width: 80%;
-    margin-top:5px;
+    margin-top: 5px;
+}
+
+.koszyk {
+    width:50%;
+    margin-left:25%;
+    background-color: #465775;
+    height:22.5vh;
+    text-align: center;
+}
+
+.koszyk input {
+    margin: 5px;
 }
