@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2026 at 07:10 PM
+-- Generation Time: Feb 13, 2026 at 07:38 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -416,6 +416,7 @@ ALTER TABLE `promocja`
 --
 ALTER TABLE `promocja_produkt`
   ADD PRIMARY KEY (`promocja_produkt_id`),
+  ADD UNIQUE KEY `produkt_id_2` (`produkt_id`),
   ADD KEY `promocja_id` (`promocja_id`,`produkt_id`),
   ADD KEY `produkt_id` (`produkt_id`);
 

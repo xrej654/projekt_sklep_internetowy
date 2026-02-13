@@ -22,8 +22,9 @@
         //kod wykonujacy zmiane danych
         if (isset($_POST["zmiana"]) && !empty($_POST['nowa_nazwa_promocjii'])) {
             $nowaNazwaPromocji = htmlspecialchars($_POST['nowa_nazwa_promocjii']);
-            
-            $query = "UPDATE `promocja` SET promocja = '{$nowaNazwaPromocji}' WHERE promocja_id = {$_POST['id']}";
+            $nowaObnizkaCeny = htmlspecialchars($_POST['nowa_obnizka_ceny']);
+
+            $query = "UPDATE `promocja` SET promocja = '{$nowaNazwaPromocji}', obnizka_ceny = '{$nowaObnizkaCeny}' WHERE promocja_id = {$_POST['id']}";
             $connection->query($query);
 
             header("Location: promocje.php");
@@ -42,8 +43,9 @@
         //kod na dodawanie danych
         if (isset($_POST['submit']) && !empty($_POST['nazwa_promocji'])) {
             $nazwaPromocji = htmlspecialchars($_POST['nazwa_promocji']);
+            $obnizkaCeny = htmlspecialchars($_POST['obnizka_ceny']);
 
-            $query = "INSERT INTO `promocja` (promocja) VALUES ('{$nazwaPromocji}')";
+            $query = "INSERT INTO `promocja` (promocja, obnizka_ceny) VALUES ('{$nazwaPromocji}', '{$obnizkaCeny}')";
             $connection->query($query);
 
             header("Location: promocje.php");
@@ -55,15 +57,18 @@
         $result = $connection->query($query);
 
         //wyswietlanie tabeli produktow
-        echo "<table> <tr> <th>Promocja</th> <th>Zmien</th> <th>Usun</th> </tr>";
+        echo "<table> <tr> <th>Promocja</th> <th>Obnizka</th> <th>Zmien</th> <th>Usun</th> </tr>";
 
         while ($row = $result->fetch_assoc()) {
             echo "<form method=\"post\">";
 
             if (isset($_POST['id']) && $row['promocja_id'] == $_POST['id']) //kod na zmiane danych w tabeli
-                echo "<tr> <td><input name=\"nowa_nazwa_promocjii\" value=\"{$row['promocja']}\"}></td> <td colspan=\"2\"><button type=\"submit\" name=\"zmiana\">Zmien</button></td> </tr>";
-            else {
+            {
+                echo "<tr> <td><input name=\"nowa_nazwa_promocjii\" value=\"{$row['promocja']}\"}></td>";
+                echo "<td><input name=\"nowa_obnizka_ceny\" value=\"{$row['obnizka_ceny']}\"}></td> <td colspan=\"2\"><button type=\"submit\" name=\"zmiana\">Zmien</button></td> </tr>";
+            } else {
                 echo "<tr> <td>{$row['promocja']}</td>";
+                echo "<td>{$row['obnizka_ceny']}%</td>";
 
                 if (isset($_POST['czy_dodac']) || isset($_POST['id']))
                     echo "<td colspan=\"2\">Dostepne jak zakonczysz formualrz dodawania</tr>";
@@ -80,6 +85,7 @@
             echo "<form  method=\"post\">";
             echo "<tr>";
             echo "<td> <input name=\"nazwa_promocji\"> </td>";
+            echo "<td> <input name=\"obnizka_ceny\"> </td>";
             echo "<td colspan=\"2\"> <button type=\"submit\" name=\"submit\">Dodaj</button> </td>";
             echo "</tr>";
             echo "</form>";

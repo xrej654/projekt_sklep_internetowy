@@ -52,7 +52,7 @@
         echo "<a href=\"index.php\">Anuluj</a>";
 
     //wyswietlanie kazdego produktu w koszyku
-    $produktyZKoszyka = $connection->query("SELECT koszyk_id, fotografia, nazwa, cena, koszyk.ilosc FROM `koszyk` JOIN `produkt` USING(produkt_id) WHERE klient_id = {$_SESSION['klient_id']}");
+    $produktyZKoszyka = $connection->query("SELECT produkt_id, koszyk_id, fotografia, nazwa, cena, koszyk.ilosc FROM `koszyk` JOIN `produkt` USING(produkt_id) WHERE klient_id = {$_SESSION['klient_id']}");
 
     echo "<section class=\"koszyk\">";
 
@@ -60,7 +60,12 @@
 
     while ($produktZKoszyka = $produktyZKoszyka->fetch_assoc()) {
         $fotografia = substr($produktZKoszyka['fotografia'], 3);
-        $cena += $produktZKoszyka['cena'] * $produktZKoszyka['ilosc']   ;
+        $cena += $produktZKoszyka['cena'] * $produktZKoszyka['ilosc'];
+
+        //obliczanie promocji
+        $obnizka = $connection->query("SELECT obnizka_ceny FROM `promocja_produkt` JOIN `promocja` USING(promocja_id) WHERE produkt_id = '{$produktZKoszyka['produkt_id']}'")->fetch_assoc()['obnizka_ceny'];
+        $cenaProduktu = ($produktZKoszyka['cena'] - $produktZKoszyka['cena'] * ($obnizka / 100)) * $produktZKoszyka['ilosc'];
+
         echo <<<PRODUKT
                 <div class="produkt">
                     <form method="post">
@@ -69,7 +74,7 @@
                         </div>
                         <div class="dane">
                             {$produktZKoszyka['nazwa']} <br> <br>
-                            {$produktZKoszyka['cena']} 
+                            {$cenaProduktu} zl
                         </div>
                         <div class="ilosc">
                             <button type="submit" name="+" class="zmiana-ilosci">+</button> <br>

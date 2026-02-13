@@ -15,15 +15,14 @@
         <section class="pasek-glowny">
             <img src="../assets/logo.png" alt="Logo strony" class="logo-strony">
 
-            <input type="text" name="tekst"
-                value="<?php if (isset($_POST['tekst']))
-                    echo htmlspecialchars($_POST['tekst']) ?>" class="wyszukiwarka">
+            <input type="text" name="tekst" value="<?php if (isset($_POST['tekst']))
+                echo htmlspecialchars($_POST['tekst']) ?>" class="wyszukiwarka">
 
                 <button type="submit" name="szukaj" class="szukaj">
                     <img src="../assets/szukaj.png" alt="">
                 </button>
 
-                <a href="system-logowania/login.php">
+                <a href="edytuj-konto.php">
                     <button type="button" class="konto">
                         <img src="../assets/konto.png" alt="">
                     </button>
@@ -34,33 +33,33 @@
                         <img src="../assets/koszyk.png" alt="">
                     </button>
                 </a>
-            </section>
-        </form>
 
-        <?php
-                include("../config/config.php");
+                <?php
+            include("../config/config.php");
 
-                //start sesji aby miec dostep do tablicy $_SESSION i danych w niej zawartych
-                session_start();
+            error_reporting(E_ALL & ~E_WARNING);
 
-                //pobieranie nazwy uzytkownika i sprawdzanie czy dane konto jest kontem admina jesli tak to wyswietlaq sie specjalny przycisk
-                $nazwa_uzytkownika = $_SESSION['nazwa_uzytkownika'];
+            //start sesji aby miec dostep do tablicy $_SESSION i danych w niej zawartych
+            session_start();
 
-                $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='{$nazwa_uzytkownika}'";
-                $wynik = $connection->query($query);
-                $wiersz = $wynik->fetch_assoc();
+            $nazwa_uzytkownika = $_SESSION['nazwa_uzytkownika'];
 
-                if ($wiersz['admin'] == 1) {
-                    echo <<<ADMINBUTTON
-                <a href="../admin/panel-admina.php">
-                    <button class="admin">
-                        <img src="../assets/admin.png">
-                    </button>
-                </a>
-            ADMINBUTTON;
-                }
-                ?>
-    </section>
+            $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='{$nazwa_uzytkownika}'";
+            $wynik = $connection->query($query);
+            $wiersz = $wynik->fetch_assoc();
+
+            if ($wiersz['admin'] == 1) {
+                echo <<<ADMINBUTTON
+                            <a href="../admin/panel-admina.php">
+                                <button type="button" class="admin">
+                                    <img src="../assets/admin.png">
+                                </button>
+                            </a>
+                    ADMINBUTTON;
+            }
+            ?>
+        </section>
+    </form>
 
     <?php
     // kod wyswietlajacy kategorie i produkty
@@ -73,18 +72,18 @@
 
         if (empty($_GET['kategoria'])) {
             $produkty = $connection->query("SELECT * FROM `produkt` WHERE nazwa LIKE '%{$wyszukiwanyTekst}%'");
-            produkt($produkty, "zalogowany/zalogowany-index.php", false);
+            produkt($produkty, "zalogowany/zalogowany-index.php", false, $connection);
         } else {
             $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE nazwa LIKE '%{$wyszukiwanyTekst}%' AND kategoria = '{$_GET['kategoria']}'");
-            produkt($produkty, "zalogowany/zalogowany-index.php", false);
+            produkt($produkty, "zalogowany/zalogowany-index.php", false, $connection);
         }
     } else {
         if (empty($_GET['kategoria'])) {
             $produkty = $connection->query("SELECT * FROM `produkt`");
-            produkt($produkty, "zalogowany/zalogowany-index.php", false);
+            produkt($produkty, "zalogowany/zalogowany-index.php", false, $connection);
         } else {
             $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE kategoria = '{$_GET['kategoria']}'");
-            produkt($produkty, "zalogowany/zalogowany-index.php", false);
+            produkt($produkty, "zalogowany/zalogowany-index.php", false, $connection);
         }
     }
     ?>

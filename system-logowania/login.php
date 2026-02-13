@@ -51,7 +51,7 @@
 
         if ($istnieje) {
             //pobieranie hasla z bazy
-            $query = "SELECT haslo FROM `konto` WHERE nazwa_uzytkownika='$login'";
+            $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='$login'";
             $result = $connection->query($query);
             $wiersz = $result->fetch_assoc();
             $haslo_baza_danych = $wiersz['haslo'];
@@ -63,7 +63,7 @@
 
                 //kod szukajacy czy sa juz dane klienta i przypisanie do sesji
 
-                $klient = $connection->query("SELECT klient_id FROM `klient` WHERE eamil = '{$email}'");
+                $klient = $connection->query("SELECT klient_id FROM `klient` WHERE email = '{$email}'");
 
                 if($klient->num_rows != 0) $_SESSION['klient_id'] = $klient->fetch_assoc()['klient_id'];
 

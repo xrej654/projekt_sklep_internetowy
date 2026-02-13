@@ -120,6 +120,10 @@
         }
         echo "</form>";
 
+        //obliczanie obnizki ceny
+        $obnizka = $connection->query("SELECT obnizka_ceny FROM `promocja_produkt` JOIN `promocja` USING(promocja_id) WHERE produkt_id = '{$produkt['produkt_id']}'")->fetch_assoc()['obnizka_ceny'];
+        $cena = $produkt['cena'] - $produkt['cena'] * ($obnizka / 100);
+
         echo <<<PRODUKTCZ2
             </div>
         </div>
@@ -132,7 +136,7 @@
                     {$produkt['opis']}
                 </div>
                 <div class="cena">
-                    {$produkt['cena']} zl
+                    {$cena} zl
                 </div>
                 <div class="ilosc">
                     {$produkt['ilosc']} szt.

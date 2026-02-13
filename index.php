@@ -15,9 +15,8 @@
         <section class="pasek-glowny">
             <img src="assets/logo.png" alt="Logo strony" class="logo-strony">
 
-            <input type="text" name="tekst"
-                value="<?php if (isset($_POST['tekst']))
-                    echo htmlspecialchars($_POST['tekst']) ?>" class="wyszukiwarka">
+            <input type="text" name="tekst" value="<?php if (isset($_POST['tekst']))
+                echo htmlspecialchars($_POST['tekst']) ?>" class="wyszukiwarka">
 
                 <button type="submit" name="szukaj" class="szukaj">
                     <img src="assets/szukaj.png" alt="">
@@ -38,36 +37,38 @@
         </form>
 
         <?php
-                include("config/config.php");
-                // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
-                if (session_status() != 2)
-                    session_destroy();
+            include("config/config.php");
+            // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
+            if (session_status() != 2)
+                session_destroy();
 
-                // kod wyswietlajacy kategorie i produkty
-                $tablicaKategorii = $connection->query("SELECT * FROM `kategoria`");
+            error_reporting(E_ALL & ~E_WARNING);
 
-                sekcjaKategorii($tablicaKategorii, "index", true);
+            // kod wyswietlajacy kategorie i produkty
+            $tablicaKategorii = $connection->query("SELECT * FROM `kategoria`");
 
-                if (isset($_POST['szukaj']) && isset($_POST['tekst'])) {
-                    $wyszukiwanyTekst = htmlspecialchars($_POST['tekst']);
+            sekcjaKategorii($tablicaKategorii, "index", true);
 
-                    if (empty($_GET['kategoria'])) {
-                        $produkty = $connection->query("SELECT * FROM `produkt` WHERE nazwa LIKE '%{$wyszukiwanyTekst}%'");
-                        produkt($produkty, "index.php", true);
-                    } else {
-                        $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE nazwa LIKE '%{$wyszukiwanyTekst}%' AND kategoria = '{$_GET['kategoria']}'");
-                        produkt($produkty, "index.php", true);
-                    }
+            if (isset($_POST['szukaj']) && isset($_POST['tekst'])) {
+                $wyszukiwanyTekst = htmlspecialchars($_POST['tekst']);
+
+                if (empty($_GET['kategoria'])) {
+                    $produkty = $connection->query("SELECT * FROM `produkt` WHERE nazwa LIKE '%{$wyszukiwanyTekst}%'");
+                    produkt($produkty, "index.php", true, $connection);
                 } else {
-                    if (empty($_GET['kategoria'])) {
-                        $produkty = $connection->query("SELECT * FROM `produkt`");
-                        produkt($produkty, "index.php", true);
-                    } else {
-                        $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE kategoria = '{$_GET['kategoria']}'");
-                        produkt($produkty, "index.php", true);
-                    }
+                    $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE nazwa LIKE '%{$wyszukiwanyTekst}%' AND kategoria = '{$_GET['kategoria']}'");
+                    produkt($produkty, "index.php", true, $connection);
                 }
-                ?>
+            } else {
+                if (empty($_GET['kategoria'])) {
+                    $produkty = $connection->query("SELECT * FROM `produkt`");
+                    produkt($produkty, "index.php", true, $connection);
+                } else {
+                    $produkty = $connection->query("SELECT * FROM `produkt` JOIN kategoria USING(kategoria_id) WHERE kategoria = '{$_GET['kategoria']}'");
+                    produkt($produkty, "index.php", true, $connection);
+                }
+            }
+            ?>
 </body>
 
 </html>

@@ -1,4 +1,17 @@
 <?php
+//zapis danych do polaczenie z baza i polaczenie z baza
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "sklep internetowy";
+
+$connection = new mysqli($host, $user, $password, $database);
+
+//sprawdzenie czy polaczenie sie udalo
+if ($connection->connect_error) {
+    die("Błąd połączenia: " . $connection->connect_error);
+}
+
 //funkcja wyswietlajaca wiadomosc bledu
 function blokBledu($wiadomosc, $link)
 {
@@ -41,7 +54,7 @@ function sekcjaKategorii($tablicaKategorii, $plik, $czyZmienicLink)
 }
 
 // funkcja wyswietlajaca produkty
-function produkt($produkty, $plik, $czyZmienicLink)
+function produkt($produkty, $plik, $czyZmienicLink, $baza)
 {
     $wysokosc = ceil($produkty->num_rows / 4) * 190;
 
@@ -55,6 +68,12 @@ function produkt($produkty, $plik, $czyZmienicLink)
             $link = $produkt["fotografia"];
             $stronaProduktu = "../produkt.php?nazwa={$produkt['nazwa']}&link={$plik}";
         }
+
+        //obliczanie obnizki ceny
+        //zmienna $baza jest potrzebna bo jak uzyjemy $connection to jest blad ze nie jest ona zainicjalizowana
+        $obnizka = $baza->query("SELECT obnizka_ceny FROM `promocja_produkt` JOIN `promocja` USING(promocja_id) WHERE produkt_id = '{$produkt['produkt_id']}'")->fetch_assoc()['obnizka_ceny'];
+        $cena = $produkt['cena'] - $produkt['cena'] * ($obnizka / 100);
+
         echo <<<SEKCJAPRODUKTOW
             <a href="{$stronaProduktu}">
                 <div class="produkt">
@@ -64,7 +83,7 @@ function produkt($produkty, $plik, $czyZmienicLink)
                     <div class="info">
                         {$produkt['nazwa']}
                         <br>
-                        {$produkt['cena']} zl   
+                        {$cena} zl   
                     </div>
                 </div>
             </a>    
@@ -72,17 +91,4 @@ function produkt($produkty, $plik, $czyZmienicLink)
     }
 
     echo "</section>";
-}
-
-//zapis danych do polaczenie z baza i polaczenie z baza
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "sklep internetowy";
-
-$connection = new mysqli($host, $user, $password, $database);
-
-//sprawdzenie czy polaczenie sie udalo
-if ($connection->connect_error) {
-    die("Błąd połączenia: " . $connection->connect_error);
 }
