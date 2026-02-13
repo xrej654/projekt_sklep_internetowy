@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2026 at 07:38 PM
+-- Generation Time: Feb 13, 2026 at 08:26 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -135,9 +135,9 @@ CREATE TABLE `koszyk` (
 --
 
 INSERT INTO `koszyk` (`koszyk_id`, `klient_id`, `produkt_id`, `ilosc`) VALUES
-(2, 15, 1, 1),
-(5, 15, 32, 6),
-(6, 15, 30, 1);
+(2, 15, 1, 3),
+(5, 15, 32, 5),
+(6, 15, 30, 2);
 
 -- --------------------------------------------------------
 
@@ -237,10 +237,11 @@ CREATE TABLE `promocja` (
 --
 
 INSERT INTO `promocja` (`promocja_id`, `promocja`, `obnizka_ceny`) VALUES
-(1, 'Black Friday', 1),
-(5, 'Winter sales', 0),
-(6, 'Summer 50% off', 0),
-(8, 'Aniversary sales', 0);
+(1, 'Black Friday', 30),
+(5, 'Winter sales', 20),
+(6, 'Summer 50% off', 50),
+(8, 'Aniversary sales', 15),
+(9, 'Cyber Monday', 25);
 
 -- --------------------------------------------------------
 
@@ -253,6 +254,17 @@ CREATE TABLE `promocja_produkt` (
   `promocja_id` tinyint(3) UNSIGNED NOT NULL,
   `produkt_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `promocja_produkt`
+--
+
+INSERT INTO `promocja_produkt` (`promocja_produkt_id`, `promocja_id`, `produkt_id`) VALUES
+(5, 9, 1),
+(7, 9, 23),
+(9, 9, 28),
+(6, 9, 29),
+(8, 9, 30);
 
 -- --------------------------------------------------------
 
@@ -504,13 +516,13 @@ ALTER TABLE `produkt`
 -- AUTO_INCREMENT for table `promocja`
 --
 ALTER TABLE `promocja`
-  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `promocja_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `promocja_produkt`
 --
 ALTER TABLE `promocja_produkt`
-  MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `promocja_produkt_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `zamowienie`
