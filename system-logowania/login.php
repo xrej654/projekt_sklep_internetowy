@@ -62,10 +62,11 @@
                 $_SESSION['nazwa_uzytkownika'] = $login;
 
                 //kod szukajacy czy sa juz dane klienta i przypisanie do sesji
-
+    
                 $klient = $connection->query("SELECT klient_id FROM `klient` WHERE email = '{$email}'");
 
-                if($klient->num_rows != 0) $_SESSION['klient_id'] = $klient->fetch_assoc()['klient_id'];
+                if ($klient->num_rows != 0)
+                    $_SESSION['klient_id'] = $klient->fetch_assoc()['klient_id'];
 
                 $query = "SELECT admin FROM `konto` WHERE nazwa_uzytkownika='$login'";
                 $wynik = $connection->query($query);
@@ -76,13 +77,13 @@
     
                 //w nastepnych elsa'ach to wyswietlanie bledow jelsi cos pojdzie nie tak
             } else {
-                blokBledu("Haslo jest nie poprawne", "login.php");
+                blokBledu("Haslo jest nie poprawne", "login.php", "../assets/x.png");
             }
         } else {
-            blokBledu("Uzytkownik nie istnieje - Kliknij 'Nie mam konta'", "login.php");
+            blokBledu("Uzytkownik nie istnieje - Kliknij 'Nie mam konta'", "login.php", "../assets/x.png");
         }
     } else if ((empty($_POST['login']) || empty($_POST['haslo'])) && isset($_POST['submit'])) {
-        blokBledu("Pola musza byc wypelnione", "login.php");
+        blokBledu("Pola musza byc wypelnione", "login.php", "../assets/x.png");
     }
 
     $connection->close();

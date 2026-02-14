@@ -13,13 +13,13 @@ if ($connection->connect_error) {
 }
 
 //funkcja wyswietlajaca wiadomosc bledu
-function blokBledu($wiadomosc, $link)
+function blokBledu($wiadomosc, $link, $linkAssetuX)
 {
     echo <<<BLOKBLEDU
                         <form action="{$link}">
                             <div class="error-block">
                                 <button type="submit">
-                                    <img src="../assets/x.png">
+                                    <img src="{$linkAssetuX}">
                                 </button>
                                 <p>
                                     {$wiadomosc}

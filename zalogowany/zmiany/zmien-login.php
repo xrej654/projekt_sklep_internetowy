@@ -54,10 +54,10 @@
 
             header("Location: ../edytuj-konto.php"); //funkcja przenoszaca do innego pliku
         } else {
-            blokBledu("Loginy nie moga byc takie same", "zmien-login.php"); //wlasna funkcja wyswietlajaca komunikat z bledem
+            blokBledu("Loginy nie moga byc takie same", "zmien-login.php", "../../assets/x.png"); //wlasna funkcja wyswietlajaca komunikat z bledem
         }
     } else if (empty($_POST['nowy_login']) && isset($_POST['submit'])) { //wyswietlanie bledu jezeli nazwa uzytkownika jest pusta i uzytkownik podmienial nazwe
-        blokBledu("Prosze wypelnic pola", "zmien-login.php");
+        blokBledu("Prosze wypelnic pola", "zmien-login.php", "../../assets/x.png");
     }
     ?>
 </body>

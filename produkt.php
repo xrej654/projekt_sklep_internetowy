@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style-globalne.css">
     <link rel="stylesheet" href="style/style-produkt.css">
+    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
     <title>Sklep internetowy</title>
 </head>
 
@@ -62,7 +63,7 @@
                 $_SESSION['klient_id'] = $connection->query("SELECT klient_id FROM `klient` ORDER BY klient_id DESC LIMIT 1")->fetch_assoc()['klient_id'];
                 header("Location: produkt.php?nazwa={$nazwa}&link={$_GET['link']}");
             } else {
-                blokBledu("Istnieje juz klient z tym emailem", "produkt.php?nazwa={$nazwa}&link={$_GET['link']}");
+                blokBledu("Istnieje juz klient z tym emailem", "produkt.php?nazwa={$nazwa}&link={$_GET['link']}", "assets/x.png");
             }
         }
     }
@@ -105,13 +106,13 @@
             $fotografia = $_POST['zdjecie'];
 
         echo <<<PRODUKTCZ1
-    <section class="produkt">
-        <div class="lewy-panel">
-            <div class="zdjecie">
-                <img src="{$fotografia}" alt="fotografia">
-            </div>
-            <div class="galeria">
-    PRODUKTCZ1;
+            <section class="produkt">
+                <div class="lewy-panel">
+                    <div class="zdjecie">
+                        <img src="{$fotografia}" alt="fotografia">
+                    </div>
+                <div class="galeria">
+            PRODUKTCZ1;
 
         echo "<form method=\"post\" action=\"produkt.php?nazwa={$nazwa}&link={$_GET['link']}\">";
         while ($zdjecie = $galeria->fetch_assoc()) {
@@ -227,7 +228,7 @@
                 echo "<button type=\"submit\" name=\"submit\">Dodaj</button>";
                 echo "</div></div></form>";
             } else if (isset($_POST['czyDodacOpinie'])) {
-                blokBledu("Utworz konto aby dodac opinie", "produkt.php?nazwa={$nazwa}&link={$_GET['link']}");
+                blokBledu("Utworz konto aby dodac opinie", "produkt.php?nazwa={$nazwa}&link={$_GET['link']}", "assets/x.png");
             }
 
             echo "</section>";

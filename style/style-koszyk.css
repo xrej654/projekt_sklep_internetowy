@@ -14,7 +14,7 @@ a {
     margin: 10px;
     padding: 10px;
     background-color: #465775;
-    height:7.5vh;
+    height: 7.5vh;
 }
 
 .koszyk .produkt .zdjecie,
@@ -30,36 +30,36 @@ a {
 }
 
 .koszyk .produkt .dane {
-    margin-left:10vw;
-    font-size:20px;
-    width:200px;
+    margin-left: 10vw;
+    font-size: 20px;
+    width: 200px;
 }
 
 .koszyk .produkt .ilosc {
-    margin-left:45vw;
+    margin-left: 45vw;
     text-align: center;
 }
 
 .koszyk .produkt .usun {
     position: relative;
-    top:3.5vh;
-    left:5vw;
+    top: 3.5vh;
+    left: 5vw;
 }
 
 .koszyk .produkt .usun button {
     width: 75px;
-    height:35px;
+    height: 35px;
 }
 
 .cenaFinalna {
-    color:red;
+    color: red;
     font-size: 30px;
     position: relative;
-    right:1vw;
+    right: 1vw;
 }
 
 button {
     border-radius: 0px;
     width: 40px;
-    height:32px;
+    height: 32px;
 }

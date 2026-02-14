@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2026 at 08:26 PM
+-- Generation Time: Feb 14, 2026 at 06:23 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -35,22 +35,12 @@ CREATE TABLE `ankieta` (
   `data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
--- --------------------------------------------------------
-
 --
--- Struktura tabeli dla tabeli `dokument`
+-- Dumping data for table `ankieta`
 --
 
-CREATE TABLE `dokument` (
-  `dokument_id` int(10) UNSIGNED NOT NULL,
-  `zamowienie_id` int(10) UNSIGNED NOT NULL,
-  `typ` enum('paragon','faktura') NOT NULL,
-  `data` datetime NOT NULL,
-  `kwota` decimal(10,2) NOT NULL,
-  `klient_id` int(10) UNSIGNED NOT NULL,
-  `NIP` varchar(15) NOT NULL,
-  `link` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+INSERT INTO `ankieta` (`ankieta_id`, `zamowienie_id`, `ocena`, `komentarz`, `data`) VALUES
+(1, 6, '', 'Bardzo super sklep', '2026-02-14 17:30:04');
 
 -- --------------------------------------------------------
 
@@ -93,7 +83,7 @@ CREATE TABLE `klient` (
 --
 
 INSERT INTO `klient` (`klient_id`, `imie`, `nazwisko`, `adres`, `nr_telefonu`, `email`) VALUES
-(15, 'Jonatan', 'Knapik', 'Sloneczna 5, 50-208', '000000000', 'jakis@email.com');
+(15, 'Jonatan', 'Knapik', 'Sloneczna 5, 50-208', '000000000', 'xrej.game@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -135,9 +125,7 @@ CREATE TABLE `koszyk` (
 --
 
 INSERT INTO `koszyk` (`koszyk_id`, `klient_id`, `produkt_id`, `ilosc`) VALUES
-(2, 15, 1, 3),
-(5, 15, 32, 5),
-(6, 15, 30, 2);
+(2, 15, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -283,6 +271,13 @@ CREATE TABLE `zamowienie` (
   `cena_laczna` decimal(10,2) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Dumping data for table `zamowienie`
+--
+
+INSERT INTO `zamowienie` (`zamowienie_id`, `klient_id`, `data_zlozenia_zamowienia`, `czy_zaplacono`, `status`, `sposob_wysylki`, `sposob_platnosci`, `cena_laczna`) VALUES
+(6, 15, '2026-02-14 17:05:44', 0, 'nie wyslano', 'inpost', 'blik', 4500.00);
+
 -- --------------------------------------------------------
 
 --
@@ -295,6 +290,13 @@ CREATE TABLE `zamowienie_produkt` (
   `produkt_id` int(10) UNSIGNED NOT NULL,
   `ilosc` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `zamowienie_produkt`
+--
+
+INSERT INTO `zamowienie_produkt` (`id`, `zamowienie_id`, `produkt_id`, `ilosc`) VALUES
+(7, 6, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -359,14 +361,6 @@ INSERT INTO `zdjecia` (`zdjecia_id`, `link`, `produkt_id`) VALUES
 ALTER TABLE `ankieta`
   ADD PRIMARY KEY (`ankieta_id`),
   ADD KEY `zamowienie_id` (`zamowienie_id`);
-
---
--- Indeksy dla tabeli `dokument`
---
-ALTER TABLE `dokument`
-  ADD PRIMARY KEY (`dokument_id`),
-  ADD KEY `zamowienie_id` (`zamowienie_id`,`klient_id`),
-  ADD KEY `klient_id` (`klient_id`);
 
 --
 -- Indeksy dla tabeli `kategoria`
@@ -462,13 +456,7 @@ ALTER TABLE `zdjecia`
 -- AUTO_INCREMENT for table `ankieta`
 --
 ALTER TABLE `ankieta`
-  MODIFY `ankieta_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `dokument`
---
-ALTER TABLE `dokument`
-  MODIFY `dokument_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ankieta_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kategoria`
@@ -528,13 +516,13 @@ ALTER TABLE `promocja_produkt`
 -- AUTO_INCREMENT for table `zamowienie`
 --
 ALTER TABLE `zamowienie`
-  MODIFY `zamowienie_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `zamowienie_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `zamowienie_produkt`
 --
 ALTER TABLE `zamowienie_produkt`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `zdjecia`
@@ -551,13 +539,6 @@ ALTER TABLE `zdjecia`
 --
 ALTER TABLE `ankieta`
   ADD CONSTRAINT `ankieta_ibfk_1` FOREIGN KEY (`zamowienie_id`) REFERENCES `zamowienie` (`zamowienie_id`);
-
---
--- Constraints for table `dokument`
---
-ALTER TABLE `dokument`
-  ADD CONSTRAINT `dokument_ibfk_1` FOREIGN KEY (`zamowienie_id`) REFERENCES `zamowienie` (`zamowienie_id`),
-  ADD CONSTRAINT `dokument_ibfk_2` FOREIGN KEY (`klient_id`) REFERENCES `klient` (`klient_id`);
 
 --
 -- Constraints for table `koszyk`

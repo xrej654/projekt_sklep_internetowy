@@ -15,23 +15,26 @@ button {
 table {
     border: 1px solid black;
     padding: 1vw;
-    width:90%;
+    width: 90%;
     text-align: center;
     border-collapse: collapse;
     border-radius: 15px;
-    margin-left:5%;
-    margin-top:2.5vh;
+    margin-left: 5%;
+    margin-top: 2.5vh;
 }
 
 table button {
     width: 50%;
 }
 
-td, th {
+td,
+th {
     border: 1px solid black;
 }
 
-input , textarea, select {
+input,
+textarea,
+select {
     background-color: #5f77a0;
 }
 
@@ -60,11 +63,11 @@ a:hover {
 }
 
 .table-section a {
-    margin-left:45vw;
+    margin-left: 45vw;
 }
 
 .table-section table a {
-    margin-left:0px;    
+    margin-left: 0px;
 }
 
 .error-block {

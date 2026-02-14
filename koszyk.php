@@ -7,6 +7,7 @@
     <title>Sklep internetowy</title>
     <link rel="stylesheet" href="style/style-globalne.css">
     <link rel="stylesheet" href="style/style-koszyk.css">
+    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     session_start();
 
     error_reporting(E_ALL & ~E_WARNING);
-    
+
     //obsluga przyciskow w koszyku
     if (isset($_POST['usun'])) {
         $connection->query("DELETE FROM `koszyk` WHERE koszyk_id = {$_POST['id']}");
@@ -52,21 +53,22 @@
         echo "<a href=\"index.php\">Anuluj</a>";
 
     //wyswietlanie kazdego produktu w koszyku
-    $produktyZKoszyka = $connection->query("SELECT produkt_id, koszyk_id, fotografia, nazwa, cena, koszyk.ilosc FROM `koszyk` JOIN `produkt` USING(produkt_id) WHERE klient_id = {$_SESSION['klient_id']}");
+    if (isset($_SESSION['klient_id'])) {
+        $produktyZKoszyka = $connection->query("SELECT produkt_id, koszyk_id, fotografia, nazwa, cena, koszyk.ilosc FROM `koszyk` JOIN `produkt` USING(produkt_id) WHERE klient_id = {$_SESSION['klient_id']}");
 
-    echo "<section class=\"koszyk\">";
+        echo "<section class=\"koszyk\">";
 
-    $cena = 0;
+        $cena = 0;
 
-    while ($produktZKoszyka = $produktyZKoszyka->fetch_assoc()) {
-        $fotografia = substr($produktZKoszyka['fotografia'], 3);
-        $cena += $produktZKoszyka['cena'] * $produktZKoszyka['ilosc'];
+        while ($produktZKoszyka = $produktyZKoszyka->fetch_assoc()) {
+            $fotografia = substr($produktZKoszyka['fotografia'], 3);
 
-        //obliczanie promocji
-        $obnizka = $connection->query("SELECT obnizka_ceny FROM `promocja_produkt` JOIN `promocja` USING(promocja_id) WHERE produkt_id = '{$produktZKoszyka['produkt_id']}'")->fetch_assoc()['obnizka_ceny'];
-        $cenaProduktu = ($produktZKoszyka['cena'] - $produktZKoszyka['cena'] * ($obnizka / 100)) * $produktZKoszyka['ilosc'];
+            //obliczanie promocji
+            $obnizka = $connection->query("SELECT obnizka_ceny FROM `promocja_produkt` JOIN `promocja` USING(promocja_id) WHERE produkt_id = '{$produktZKoszyka['produkt_id']}'")->fetch_assoc()['obnizka_ceny'];
+            $cenaProduktu = ($produktZKoszyka['cena'] - $produktZKoszyka['cena'] * ($obnizka / 100)) * $produktZKoszyka['ilosc'];
+            $cena += $cenaProduktu;
 
-        echo <<<PRODUKT
+            echo <<<PRODUKT
                 <div class="produkt">
                     <form method="post">
                         <div class="zdjecie">
@@ -90,12 +92,13 @@
                 </div>
                 <br>
             PRODUKT;
+        }
+
+        echo "<a class=\"cenaFinalna\">$cena zl</a> <br>";
+        echo "<a href=\"zloz-zamowienie.php\">Zamow</a>";
+
+        echo "</section>";
     }
-
-    echo "<a class=\"cenaFinalna\">$cena zl</a> <br>";
-    echo "<a href=\"zaplac.php\">Zaplac</a>";
-
-    echo "</section>";
     ?>
 </body>
 

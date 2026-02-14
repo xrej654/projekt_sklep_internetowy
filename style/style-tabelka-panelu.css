@@ -1,12 +1,12 @@
 .tabelka-panelu {
     background-color: #465775;
-    width:90vw;
+    width: 90vw;
     height: auto;
     position: relative;
-    top:3vh;
-    left:5vw;
+    top: 3vh;
+    left: 5vw;
     border-radius: 15px;
-    border:1px solid #465775;
+    border: 1px solid #465775;
     padding-bottom: 1vh;
 }
 
@@ -23,6 +23,8 @@ button {
     color: #F9DC5C;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     width: 7.5vw;
 }

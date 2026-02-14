@@ -53,7 +53,7 @@
         if (isset($_POST['submit'])) {
             foreach ($_POST['ids'] as $id) {
                 $query = "SELECT * FROM `promocja_produkt` WHERE promocja_id = {$_POST['promocja']} AND produkt_id = {$id}";
-                $relations = $connection->query($query);       
+                $relations = $connection->query($query);
 
                 if ($relations->num_rows != 0) {
                     $query = "DELETE FROM `promocja_produkt` WHERE promocja_id = {$_POST['promocja']} AND produkt_id = {$id}";

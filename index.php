@@ -39,8 +39,7 @@
         <?php
             include("config/config.php");
             // usuwanie sesji aby pozbyc sie globalnej tabeli $_SESSION i zresetowanie danych
-            if (session_status() != 2)
-                session_destroy();
+            session_destroy();
 
             error_reporting(E_ALL & ~E_WARNING);
 

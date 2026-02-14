@@ -1,12 +1,12 @@
 .panel {
     background-color: #465775;
-    width:50vw;
+    width: 50vw;
     height: 32vh;
     position: relative;
-    top:3vh;
-    left:25vw;
+    top: 3vh;
+    left: 25vw;
     border-radius: 15px;
-    border:1px solid #465775;
+    border: 1px solid #465775;
 }
 
 .panel a {

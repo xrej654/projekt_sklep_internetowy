@@ -28,12 +28,11 @@
 
                 header("Location: galeria-zdjec.php");
             } else {
-                blokBledu("Prosze uzupelnic pola", "galeria-zdjec.php");
+                blokBledu("Prosze uzupelnic pola", "galeria-zdjec.php", "../assets/x.png");
             }
         }
 
-        if (isset($_POST['dodaj']))
-        {
+        if (isset($_POST['dodaj'])) {
             $query = "INSERT INTO `zdjecia` (link, produkt_id) VALUES ('{$_POST['fotografia']}', '{$_POST['produkt_id']}')";
             $connection->query($query);
 

@@ -23,7 +23,7 @@
         //kod obowiazuje kolejno za dodawanie, zmiana i usuwanie rekordow do bazy
         if (isset($_POST["submit"])) {
             if (empty($_POST["nazwa_kategorii"]) && empty($_POST['ikona'])) {
-                blokBledu("Prosze wypelnic pole", "kategorie.php");
+                blokBledu("Prosze wypelnic pole", "kategorie.php", "../assets/x.png");
             } else {
                 $nazwaKategorii = htmlspecialchars($_POST['nazwa_kategorii']);
                 $ikona = htmlspecialchars($_POST['ikona']);
@@ -45,7 +45,7 @@
 
             header("Location: kategorie.php");
         } else if (isset($_POST['submit']) && empty($_POST["nowa_nazwa_kategorii"]) && empty($_POST['nowa_ikona'])) {
-            blokBledu("Prosze uzupelnic pole", "kategorie.php");
+            blokBledu("Prosze uzupelnic pole", "kategorie.php", "../assets/x.png");
         }
 
         if (isset($_POST["usun"]) && !empty($_POST['kategoria'])) {

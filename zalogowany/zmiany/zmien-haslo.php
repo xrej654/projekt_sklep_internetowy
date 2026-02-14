@@ -47,7 +47,7 @@
         $row = $result->fetch_assoc();
 
         if ($row['haslo'] === $_POST['nowe_haslo'] || $_POST['stare_haslo'] === $_POST['nowe_haslo']) { //sprawdzanie czy nowe haslo jest takie same (jesli tak wyswietlany blad)
-            blokBledu("Nowe haslo nie moze byc takie same jak stare", "zmien-haslo.php");
+            blokBledu("Nowe haslo nie moze byc takie same jak stare", "zmien-haslo.php", "../../assets/x.png");
         } else if ($row['haslo'] === $_POST["stare_haslo"] && $_POST['nowe_haslo'] !== $row['haslo']) { //hasla rone to robimy podmiane
             $noweHaslo = htmlspecialchars($_POST['nowe_haslo']);
             $query = "UPDATE `konto` SET haslo='{noweHaslo}' WHERE nazwa_uzytkownika='{$_SESSION['nazwa_uzytkownika']}'";
@@ -55,10 +55,10 @@
 
             header("Location: ../edytuj-konto.php"); //przekierowanie do innego pliku podanego jako argument funkcji
         } else { //warunek jezeli cos bylo nie tak to wyswietlanie bledu
-            blokBledu("Haslo jest nie zgodne", "zmien-haslo.php");
+            blokBledu("Haslo jest nie zgodne", "zmien-haslo.php", "../../assets/x.png");
         }
     } else if ((empty($_POST['stare_haslo']) || empty($_POST['nowe_haslo'])) && isset($_POST["submit"])) { //jesli sa puste pole to wyswietlamy blad
-        blokBledu("Prosze wypelnic pola", "zmien-haslo.php");
+        blokBledu("Prosze wypelnic pola", "zmien-haslo.php", "../../assets/x.png");
     }
 
     $connection->close();

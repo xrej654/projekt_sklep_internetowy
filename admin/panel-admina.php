@@ -18,6 +18,7 @@
         <a href="galeria-zdjec.php">Galeria zdjec</a>
         <a href="promocje.php">Promocje</a>
         <a href="sposob-dodania-promocji.php">Promocja-produkt</a>
+        <a href="status-zamowien.php">Status zamowien</a>
 
         <a href="../zalogowany/zalogowany-index.php">Anuluj</a>
     </section>

@@ -23,7 +23,7 @@
         //kolejno warunek na dodawanie nowych rekordow, zmiane istniejacych i usuwanie
         if (isset($_POST["submit"])) {
             if (empty($_POST["nazwa_producenta"])) {
-                blokBledu("Prosze wypelnic pole", "producent.php");
+                blokBledu("Prosze wypelnic pole", "producent.php", "../assets/x.png");
             } else {
                 $query = "INSERT INTO `producent` (producent) VALUES ('{$_POST['nazwa_producenta']}')";
                 $connection->query($query);
@@ -37,7 +37,7 @@
 
             header("Location: producent.php");
         } else if (isset($_POST['submit']) && empty($_POST["nowa_nazwa_producenta"])) {
-            blokBledu("Prosze uzupelnic pole", "producent.php");
+            blokBledu("Prosze uzupelnic pole", "producent.php", "../assets/x.png");
         }
 
         if (isset($_POST["usun"]) && !empty($_POST['producent'])) {
@@ -46,7 +46,7 @@
 
             header("Location: producent.php");
         }
-        
+
         $query = "SELECT DISTINCT *  FROM `producent`";
         $result = $connection->query($query);
 

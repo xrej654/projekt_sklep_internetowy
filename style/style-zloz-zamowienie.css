@@ -1,0 +1,17 @@
+a {
+    text-align: center;
+    margin-left: 48%;
+}
+
+.zamowienie {
+    width: 60%;
+    height: 20vh;
+    background-color: #465775;
+    border-radius: 15px;
+    margin-left: 20%;
+    text-align: center;
+}
+
+.zamowienie * {
+    margin-top: 5px;
+}
