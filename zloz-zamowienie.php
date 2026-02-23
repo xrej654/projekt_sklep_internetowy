@@ -7,7 +7,7 @@
     <title>Sklep internetowy</title>
     <link rel="stylesheet" href="style/style-globalne.css">
     <link rel="stylesheet" href="style/style-zloz-zamowienie.css">
-    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -16,6 +16,7 @@
 
     session_start();
 
+    error_reporting(E_ALL & ~E_WARNING);
 
     //zaleznosc linku do powrotu z koszyka w zaleznosci od sesji
     if (isset($_SESSION['nazwa_uzytkownika']))
@@ -50,8 +51,26 @@
 
     //kod ktory jest odpowiedzialny za ustawianie bazy danych oraz wyswietlenie ankiety
     if (isset($_POST['zaplac']) && isset($_POST['platnosc']) && isset($_POST['wysylka'])) {
-        echo "[Symulacja platnosci]";
 
+        echo "<form method=\"post\">";
+        switch ($_POST['platnosc']) {
+            case 'blik':
+                for ($i = 0; $i < 6; $i++) {
+                    echo "<input name=\"liczba{$i}\" type=\"number\" min=\"0\" max=\"9\">";
+                }
+                break;
+            case 'karta':
+                echo "<input name=\"numerKarty\" type=\"text\" maxlength=\"16\">";
+                echo "<br> <input name=\"data\" type=\"text\" placeholder=\"MM/YY\"> <br> <input name=\"numerZTylu\" type=\"number\" min=\"100\" max=\"999\">";
+                break;
+            case 'paypal':
+                echo "<input name=\"paypalEmail\" type=\"email\">";
+                break;
+        }
+        echo "<br> <button type=\"submit\" name=\"ankieta\">Przejdz do platnosci</button>";
+        echo "</form>";
+    } else if (isset($_POST['ankieta'])) //pominiecie sprawdzania wpisania danych przez to ze sa bledy przy warunku prawdopodobnie przez to ze korzystamy ze switcha i jest pare pol do sprawdzenia, ale nie jestem pewien
+    {
         $cenaLaczna = 0;
         $data = date('Y-m-d H:i:s');
 
@@ -67,6 +86,10 @@
             $cenaLaczna += ($produktZKoszyka['cena'] - $produktZKoszyka['cena'] * ($obnizka / 100)) * $produktZKoszyka['ilosc'];
 
             $connection->query("INSERT INTO `zamowienie_produkt` (zamowienie_id, produkt_id, ilosc) VALUES ({$zamowienie_id}, {$produktZKoszyka['produkt_id']}, {$produktZKoszyka['ilosc']})");
+
+            $aktualnaIlosc = $connection->query("SELECT ilosc FROM `produkt` WHERE produkt_id = {$produktZKoszyka['produkt_id']}")->fetch_assoc()["ilosc"] - $produktZKoszyka['ilosc'];
+
+            $connection->query("UPDATE `produkt` SET ilosc = {$aktualnaIlosc} WHERE produkt_id = {$produktZKoszyka['produkt_id']}");
         }
 
         $connection->query("UPDATE `zamowienie` SET cena_laczna = {$cenaLaczna} WHERE zamowienie_id = {$zamowienie_id}");

@@ -7,7 +7,7 @@
     <title>Sklep internetowy</title>
     <link rel="stylesheet" href="style/style-globalne.css">
     <link rel="stylesheet" href="style/style-koszyk.css">
-    <link rel="shortcut icon" href="../../assets/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
 </head>
 
 <body>
