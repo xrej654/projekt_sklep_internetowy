@@ -28,10 +28,10 @@
 
         echo $noweHaslo;
 
-        $connection->query("UPDATE `konto` SET haslo = '{$noweHaslo}' WHERE id = {$_GET['id']}");
+        $connection->query("UPDATE `konto` SET haslo = '{$noweHaslo}' WHERE nazwa_uzytkownika=$_POST["nazwa_uzytkownika"]");
     } else {
         echo "<form method=\"post\">";
-        echo "<input type=\"email\" placeholder=\"Podaj mail na ktory wyslac nowe haslo\"> <br> <button type=\"submit\" name=\"submit\">Wyslij</button>";
+        echo "<input type=\"email\" placeholder=\"Podaj mail na ktory wyslac nowe haslo\"> <br> <input type="text" name="nazwa_uzytkownika" placeholder="Podaj swoj login"> <br> <button type=\"submit\" name=\"submit\">Wyslij</button>";
         echo "</form>";
     }
     ?>
