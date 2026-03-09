@@ -22,6 +22,7 @@
 
             <div class="kolumna-prawa">
                 <a href="dodaj-konto.php">Nie mam konta</a>
+                <a href="reset-hasla.php">Nie pamietam hasla</a>
                 <button type="submit" name="submit">Zaloguj</button>
             </div>
         </form>
