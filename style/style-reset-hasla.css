@@ -1,0 +1,19 @@
+::placeholder {
+    color: #F9DC5C;
+}
+
+.reset-hasla {
+    background-color: #465775;
+    border-radius: 15px;
+    text-align: center;
+    width: 40vw;
+    margin-left:30vw;
+    margin-right:30vw;
+    margin-top:5vh;
+    padding: 1%;
+}
+
+.reset-hasla button {
+    position: relative;
+    top: 1vh;
+}
