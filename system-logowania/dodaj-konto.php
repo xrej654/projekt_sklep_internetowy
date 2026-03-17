@@ -52,7 +52,7 @@
             $wynik = $connection->query($query);
 
             while ($wiersz = $wynik->fetch_assoc()) {
-                if ($login === $wiersz['nazwa_uzytkownika']) {
+                if ($login === $wiersz['nazwa_uzytkownika'] || $email === $wiersz['email']) {
                     $istnieje = true;
                     break;
                 }

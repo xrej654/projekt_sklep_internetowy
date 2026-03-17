@@ -36,6 +36,7 @@
     if (!empty($_POST['login']) && !empty($_POST['haslo'])) { //sprawdzanie czy pola nie sa puste
         $login = htmlspecialchars($_POST['login']);
         $haslo = htmlspecialchars($_POST['haslo']);
+        echo $haslo;
         $istnieje = false;
 
         //sprawdzenie czy konto istnieje
@@ -54,11 +55,11 @@
             $query = "SELECT * FROM `konto` WHERE nazwa_uzytkownika='$login'";
             $result = $connection->query($query);
             $wiersz = $result->fetch_assoc();
-            $haslo_baza_danych = $wiersz['haslo'];
+            $haslo_baza_danych = htmlspecialchars($wiersz['haslo']);
             $email = $wiersz['email'];
 
             //sprawdzenie zgosnosci z haslem i wpisywanie danych do sesji
-            if ($haslo === $haslo_baza_danych) {
+            if ($haslo == $haslo_baza_danych) {
                 $_SESSION['nazwa_uzytkownika'] = $login;
 
                 //kod szukajacy czy sa juz dane klienta i przypisanie do sesji
