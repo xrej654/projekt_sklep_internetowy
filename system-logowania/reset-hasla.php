@@ -15,6 +15,8 @@
     <?php
     include("../config/config.php");
 
+    error_reporting(E_ALL | ~E_WARNING);
+
     session_start();
 
     echo "<section class=\"reset-hasla\">";
@@ -27,7 +29,7 @@
 
         while (strlen($noweHaslo) <= 8) {
             $znak = chr(rand(33, 125));
-            $noweHaslo .= $znak;
+            if ($znak != '>' && $znak != '<' && $znak != '/'&& $znak != chr(92) && $znak != chr(39) && $znak != '"') $noweHaslo .= $znak;
         }
 
         $noweHaslo = htmlspecialchars($noweHaslo);
